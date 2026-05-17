@@ -9,15 +9,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --bg: #0a0a0f;
-    --bg2: #111118;
-    --bg3: #16161f;
-    --accent: #7c5cfc;
-    --accent2: #a87cff;
-    --accent-glow: rgba(124,92,252,0.18);
-    --text: #f0eeff;
-    --muted: #8a8aaa;
-    --border: rgba(124,92,252,0.18);
+    --bg: #080005;
+    --bg2: #0f0009;
+    --bg3: #180010;
+    --accent: #d91a2a;
+    --accent2: #ff3347;
+    --accent3: #ff6677;
+    --accent-glow: rgba(217,26,42,0.14);
+    --text: #fff0f2;
+    --muted: #a08088;
+    --border: rgba(217,26,42,0.25);
     --border2: rgba(255,255,255,0.07);
     --mono: 'Space Mono', monospace;
     --sans: 'Outfit', sans-serif;
@@ -26,6 +27,18 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* No selection highlight anywhere */
+  * {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+  }
+  .loadstring-code { -webkit-user-select: text; user-select: text; }
+  ::selection { background: transparent; }
+  ::-moz-selection { background: transparent; }
 
   body {
     background: var(--bg);
@@ -37,652 +50,454 @@
     overflow-x: hidden;
   }
 
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 2rem;
-    height: 64px;
-    background: rgba(10,10,15,0.85);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border2);
+  /* Floating particles */
+  .bg-particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0;
+    animation: floatUp var(--dur, 9s) var(--delay, 0s) infinite ease-in;
   }
+  @keyframes floatUp {
+    0%   { transform: translateY(105vh) scale(0); opacity: 0; }
+    10%  { opacity: 0.18; }
+    90%  { opacity: 0.05; }
+    100% { transform: translateY(-15vh) scale(1.3); opacity: 0; }
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 64px;
+    background: rgba(8,0,5,0.88);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border2);
+    animation: slideDown 0.5s ease both;
+  }
+  @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
   .nav-logo {
-    font-family: var(--mono);
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--accent2);
-    text-decoration: none;
-    cursor: pointer;
+    font-family: var(--mono); font-size: 1.1rem; font-weight: 700;
+    color: var(--accent2); text-decoration: none; cursor: pointer;
+    position: relative; transition: color 0.2s;
   }
-
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    list-style: none;
+  .nav-logo::after {
+    content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+    height: 1px; background: var(--accent2); transform: scaleX(0); transition: transform 0.3s;
   }
+  .nav-logo:hover::after { transform: scaleX(1); }
 
+  .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
   .nav-links a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: color 0.2s;
-    cursor: pointer;
+    color: var(--muted); text-decoration: none; font-size: 0.9rem;
+    font-weight: 500; transition: color 0.2s; cursor: pointer;
+    position: relative;
   }
-
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+    height: 1px; background: var(--accent2); transform: scaleX(0); transition: transform 0.25s;
+  }
   .nav-links a:hover { color: var(--text); }
+  .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
   .nav-links a.active { color: var(--accent2); }
 
   .nav-cta {
-    background: var(--accent);
-    color: #fff !important;
-    padding: 0.4rem 1.1rem;
-    border-radius: var(--radius-sm);
-    font-weight: 600 !important;
+    background: var(--accent) !important; color: #fff !important;
+    padding: 0.4rem 1.1rem; border-radius: var(--radius-sm);
+    font-weight: 600 !important; transition: background 0.2s, transform 0.15s !important;
   }
-  .nav-cta:hover { background: var(--accent2) !important; color: #fff !important; }
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { background: var(--accent2) !important; transform: scale(1.05); }
 
   .hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 4px;
+    display: none; flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 4px;
   }
-  .hamburger span {
-    display: block;
-    width: 22px;
-    height: 2px;
-    background: var(--text);
-    border-radius: 2px;
-    transition: 0.3s;
-  }
+  .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: 0.3s; }
 
-  /* PAGES */
-  .page { display: none; padding-top: 64px; }
-  .page.active { display: block; }
+  /* ── PAGES ── */
+  .page { display: none; padding-top: 64px; position: relative; z-index: 1; }
+  .page.active { display: block; animation: fadeInPage 0.4s ease both; }
+  @keyframes fadeInPage { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* HERO */
+  /* ── HERO ── */
   .hero {
     min-height: calc(100vh - 64px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 4rem 1.5rem;
-    position: relative;
-    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 4rem 1.5rem;
+    position: relative; overflow: hidden;
   }
-
   .hero-bg {
-    position: absolute;
-    inset: 0;
+    position: absolute; inset: 0;
     background:
-      radial-gradient(ellipse 60% 50% at 50% 30%, rgba(124,92,252,0.12) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 30% at 80% 80%, rgba(168,124,255,0.07) 0%, transparent 60%);
-    pointer-events: none;
+      radial-gradient(ellipse 65% 55% at 50% 30%, rgba(217,26,42,0.1) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 80% 80%, rgba(255,51,71,0.06) 0%, transparent 60%);
+    pointer-events: none; animation: breathe 6s ease-in-out infinite alternate;
   }
-
+  @keyframes breathe { from { opacity: 0.7; } to { opacity: 1; } }
   .hero-grid {
-    position: absolute;
-    inset: 0;
+    position: absolute; inset: 0;
     background-image:
-      linear-gradient(rgba(124,92,252,0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(124,92,252,0.05) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
+      linear-gradient(rgba(217,26,42,0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(217,26,42,0.045) 1px, transparent 1px);
+    background-size: 44px 44px;
+    pointer-events: none; animation: gridPan 22s linear infinite;
   }
+  @keyframes gridPan { from { background-position: 0 0; } to { background-position: 44px 44px; } }
 
   .hero-content { position: relative; z-index: 1; max-width: 680px; }
 
   .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(124,92,252,0.12);
-    border: 1px solid var(--border);
-    color: var(--accent2);
-    font-size: 0.8rem;
-    font-weight: 600;
-    padding: 0.3rem 1rem;
-    border-radius: 999px;
-    margin-bottom: 1.5rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(217,26,42,0.1); border: 1px solid var(--border);
+    color: var(--accent2); font-size: 0.78rem; font-weight: 600;
+    padding: 0.3rem 1rem; border-radius: 999px; margin-bottom: 1.5rem;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    animation: fadeInUp 0.6s 0.1s ease both;
   }
+  .badge-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent2); animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.6); opacity: 0.4; } }
 
   .hero h1 {
-    font-family: var(--mono);
-    font-size: clamp(2.8rem, 8vw, 5rem);
-    font-weight: 700;
-    line-height: 1.05;
-    margin-bottom: 1.2rem;
-    letter-spacing: -0.02em;
+    font-family: var(--mono); font-size: clamp(2.8rem, 8vw, 5.2rem);
+    font-weight: 700; line-height: 1.05; margin-bottom: 1.2rem;
+    letter-spacing: -0.02em; animation: fadeInUp 0.6s 0.2s ease both;
   }
-
   .hero h1 span {
-    background: linear-gradient(135deg, #a87cff, #7c5cfc, #c4a0ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    background: linear-gradient(135deg, #ff6677, #d91a2a, #ff3347);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; background-size: 200% 200%;
+    animation: gradShift 3s ease infinite alternate;
   }
+  @keyframes gradShift { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
 
   .hero p {
-    font-size: 1.15rem;
-    color: var(--muted);
-    margin-bottom: 2.5rem;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
+    font-size: 1.15rem; color: var(--muted); margin-bottom: 2.5rem;
+    max-width: 480px; margin-left: auto; margin-right: auto;
+    animation: fadeInUp 0.6s 0.3s ease both;
   }
 
   .loadstring-box {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1rem 1.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    text-align: left;
+    background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 1rem 1.25rem; display: flex; align-items: center;
+    justify-content: space-between; gap: 1rem; margin-bottom: 2rem; text-align: left;
+    animation: fadeInUp 0.6s 0.4s ease both;
+    transition: border-color 0.3s, box-shadow 0.3s;
   }
-
-  .loadstring-label {
-    font-size: 0.7rem;
-    color: var(--accent);
-    font-family: var(--mono);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 4px;
-  }
-
-  .loadstring-code {
-    font-family: var(--mono);
-    font-size: 0.78rem;
-    color: #c4a0ff;
-    word-break: break-all;
-  }
+  .loadstring-box:hover { border-color: var(--accent2); box-shadow: 0 0 22px rgba(217,26,42,0.12); }
+  .loadstring-label { font-size: 0.7rem; color: var(--accent); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+  .loadstring-code { font-family: var(--mono); font-size: 0.78rem; color: #ff8a96; word-break: break-all; }
 
   .copy-btn {
-    flex-shrink: 0;
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    border-radius: var(--radius-sm);
-    padding: 0.45rem 1rem;
-    font-size: 0.8rem;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: var(--sans);
-    transition: background 0.2s, transform 0.1s;
+    flex-shrink: 0; background: var(--accent); color: #fff; border: none;
+    border-radius: var(--radius-sm); padding: 0.45rem 1rem; font-size: 0.8rem;
+    font-weight: 600; cursor: pointer; font-family: var(--sans);
+    transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
   }
-  .copy-btn:hover { background: var(--accent2); }
-  .copy-btn:active { transform: scale(0.97); }
+  .copy-btn:hover { background: var(--accent2); box-shadow: 0 4px 16px rgba(217,26,42,0.4); }
+  .copy-btn:active { transform: scale(0.95); }
 
-  .hero-btns {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
+  .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeInUp 0.6s 0.5s ease both; }
 
   .btn-primary {
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    border-radius: var(--radius-sm);
-    padding: 0.75rem 1.75rem;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: var(--sans);
-    text-decoration: none;
-    display: inline-block;
-    transition: background 0.2s, transform 0.15s;
+    background: var(--accent); color: #fff; border: none;
+    border-radius: var(--radius-sm); padding: 0.75rem 1.75rem;
+    font-size: 1rem; font-weight: 600; cursor: pointer; font-family: var(--sans);
+    text-decoration: none; display: inline-block;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    position: relative; overflow: hidden;
   }
-  .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+  .btn-primary::before {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    width: 0; height: 0; background: rgba(255,255,255,0.15);
+    border-radius: 50%; transform: translate(-50%,-50%);
+    transition: width 0.45s, height 0.45s;
+  }
+  .btn-primary:hover::before { width: 320px; height: 320px; }
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(217,26,42,0.42); }
+  .btn-primary:active { transform: translateY(0) scale(0.97); }
 
   .btn-outline {
-    background: transparent;
-    color: var(--text);
-    border: 1px solid var(--border2);
-    border-radius: var(--radius-sm);
-    padding: 0.75rem 1.75rem;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    font-family: var(--sans);
-    text-decoration: none;
-    display: inline-block;
+    background: transparent; color: var(--text); border: 1px solid var(--border2);
+    border-radius: var(--radius-sm); padding: 0.75rem 1.75rem;
+    font-size: 1rem; font-weight: 500; cursor: pointer; font-family: var(--sans);
+    text-decoration: none; display: inline-block;
     transition: border-color 0.2s, background 0.2s, transform 0.15s;
   }
-  .btn-outline:hover {
-    border-color: var(--accent);
-    background: var(--accent-glow);
-    transform: translateY(-2px);
-  }
+  .btn-outline:hover { border-color: var(--accent); background: var(--accent-glow); transform: translateY(-2px); }
+  .btn-outline:active { transform: translateY(0) scale(0.97); }
 
-  /* SECTION */
-  section {
-    padding: 5rem 1.5rem;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-  .section-tag {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 0.75rem;
-  }
+  /* ── SECTION ── */
+  section { padding: 5rem 1.5rem; max-width: 1000px; margin: 0 auto; }
+  .section-tag { font-family: var(--mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+  .section-title { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 700; line-height: 1.2; margin-bottom: 1rem; }
+  .section-sub { color: var(--muted); max-width: 520px; margin-bottom: 3rem; }
 
-  .section-title {
-    font-size: clamp(1.6rem, 4vw, 2.4rem);
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 1rem;
-  }
-
-  .section-sub {
-    color: var(--muted);
-    max-width: 520px;
-    margin-bottom: 3rem;
-  }
-
-  /* FEATURES */
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.25rem;
-  }
-
+  /* ── FEATURES ── */
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; }
   .feature-card {
-    background: var(--bg2);
-    border: 1px solid var(--border2);
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    transition: border-color 0.25s, transform 0.2s;
+    background: var(--bg2); border: 1px solid var(--border2);
+    border-radius: var(--radius); padding: 1.5rem;
+    transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
+    position: relative; overflow: hidden;
   }
-
-  .feature-card:hover {
-    border-color: var(--border);
-    transform: translateY(-3px);
+  .feature-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    transform: scaleX(0); transition: transform 0.4s;
   }
-
+  .feature-card:hover { border-color: var(--border); transform: translateY(-4px); box-shadow: 0 8px 30px rgba(217,26,42,0.1); }
+  .feature-card:hover::before { transform: scaleX(1); }
   .feature-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: var(--radius-sm);
-    background: rgba(124,92,252,0.12);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
+    width: 42px; height: 42px; border-radius: var(--radius-sm);
+    background: rgba(217,26,42,0.1); display: flex; align-items: center;
+    justify-content: center; font-size: 1.3rem; margin-bottom: 1rem;
+    transition: transform 0.3s;
   }
+  .feature-card:hover .feature-icon { transform: scale(1.1) rotate(-6deg); }
+  .feature-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.4rem; }
+  .feature-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
 
-  .feature-card h3 {
-    font-size: 1.05rem;
-    font-weight: 600;
-    margin-bottom: 0.4rem;
-  }
-
-  .feature-card p {
-    font-size: 0.9rem;
-    color: var(--muted);
-    line-height: 1.6;
-  }
-
-  /* FAQ */
+  /* ── FAQ ── */
   .faq-list { display: flex; flex-direction: column; gap: 0.75rem; }
-
-  .faq-item {
-    background: var(--bg2);
-    border: 1px solid var(--border2);
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-
+  .faq-item { background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius); overflow: hidden; transition: border-color 0.25s; }
+  .faq-item.open { border-color: var(--border); }
   .faq-q {
-    width: 100%;
-    background: none;
-    border: none;
-    color: var(--text);
-    font-family: var(--sans);
-    font-size: 1rem;
-    font-weight: 500;
-    padding: 1.1rem 1.25rem;
-    text-align: left;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .faq-q .chevron {
-    flex-shrink: 0;
-    color: var(--muted);
-    transition: transform 0.25s;
-    font-size: 1.2rem;
-  }
-
-  .faq-item.open .chevron { transform: rotate(180deg); }
-
-  .faq-a {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease, padding 0.3s;
-    font-size: 0.92rem;
-    color: var(--muted);
-    padding: 0 1.25rem;
-    line-height: 1.7;
-  }
-
-  .faq-item.open .faq-a {
-    max-height: 200px;
-    padding: 0 1.25rem 1.1rem;
-  }
-
-  /* GAMES PAGE */
-  .games-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1.25rem;
-    margin-top: 2rem;
-  }
-
-  .game-card {
-    background: var(--bg2);
-    border: 1px solid var(--border2);
-    border-radius: var(--radius);
-    overflow: hidden;
-    transition: border-color 0.25s, transform 0.2s;
-    cursor: pointer;
-  }
-
-  .game-card:hover {
-    border-color: var(--border);
-    transform: translateY(-3px);
-  }
-
-  .game-thumb {
-    width: 100%;
-    height: 130px;
-    background: linear-gradient(135deg, var(--bg3), rgba(124,92,252,0.15));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.5rem;
-  }
-
-  .game-info { padding: 1rem; }
-
-  .game-info h3 {
-    font-size: 0.95rem;
-    font-weight: 600;
-    margin-bottom: 0.2rem;
-  }
-
-  .game-status {
-    font-size: 0.75rem;
-    font-family: var(--mono);
-    color: #4cbb7a;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .game-status::before {
-    content: '';
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: #4cbb7a;
-    display: inline-block;
-  }
-
-  /* GET KEY PAGE */
-  .key-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    max-width: 560px;
-  }
-
-  .key-step {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-  }
-
-  .step-num {
-    flex-shrink: 0;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: rgba(124,92,252,0.15);
-    border: 1px solid var(--border);
-    color: var(--accent2);
-    font-family: var(--mono);
-    font-size: 0.85rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .step-body h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem; }
-  .step-body p { font-size: 0.88rem; color: var(--muted); }
-
-  .key-box {
-    background: var(--bg3);
-    border: 1px dashed var(--border);
-    border-radius: var(--radius);
-    padding: 2rem;
-    text-align: center;
-    max-width: 480px;
-    margin-top: 2rem;
-  }
-
-  .key-box p {
-    color: var(--muted);
-    font-size: 0.9rem;
-    margin-top: 0.75rem;
-  }
-
-  /* PREMIUM PAGE */
-  .plans-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.25rem;
-    margin-top: 2rem;
-  }
-
-  .plan-card {
-    background: var(--bg2);
-    border: 1px solid var(--border2);
-    border-radius: var(--radius);
-    padding: 1.75rem;
-    position: relative;
-    transition: border-color 0.25s, transform 0.2s;
-  }
-
-  .plan-card:hover { transform: translateY(-3px); }
-
-  .plan-card.featured {
-    border-color: var(--accent);
-    background: rgba(124,92,252,0.06);
-  }
-
-  .plan-badge {
-    position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--accent);
-    color: #fff;
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 0.25rem 0.9rem;
-    border-radius: 999px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    white-space: nowrap;
-  }
-
-  .plan-name {
-    font-family: var(--mono);
-    font-size: 0.85rem;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 0.5rem;
-  }
-
-  .plan-price {
-    font-size: 2.2rem;
-    font-weight: 700;
-    font-family: var(--mono);
-    color: var(--text);
-    margin-bottom: 0.25rem;
-  }
-
-  .plan-period { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.25rem; }
-
-  .plan-features {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .plan-features li {
-    font-size: 0.9rem;
-    color: var(--muted);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .plan-features li .check { color: #4cbb7a; font-size: 1rem; }
-
-  /* CTA BANNER */
-  .cta-banner {
-    background: linear-gradient(135deg, rgba(124,92,252,0.15), rgba(168,124,255,0.08));
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 3rem 2rem;
-    text-align: center;
-    margin: 2rem 0;
-  }
-
-  .cta-banner h2 {
-    font-size: clamp(1.5rem, 4vw, 2.2rem);
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-  }
-
-  .cta-banner p { color: var(--muted); margin-bottom: 1.75rem; }
-
-  .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border2);
-    padding: 2rem 1.5rem;
-    text-align: center;
-    color: var(--muted);
-    font-size: 0.85rem;
-  }
-
-  footer .footer-logo {
-    font-family: var(--mono);
-    font-weight: 700;
-    color: var(--accent2);
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-  }
-
-  footer .footer-links {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    margin: 0.75rem 0;
-    flex-wrap: wrap;
-  }
-
-  footer .footer-links a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 0.85rem;
-    cursor: pointer;
+    width: 100%; background: none; border: none; color: var(--text);
+    font-family: var(--sans); font-size: 1rem; font-weight: 500;
+    padding: 1.1rem 1.25rem; text-align: left; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
     transition: color 0.2s;
   }
+  .faq-q:hover { color: var(--accent2); }
+  .chevron { flex-shrink: 0; color: var(--muted); transition: transform 0.3s, color 0.2s; font-size: 1.2rem; }
+  .faq-item.open .chevron { transform: rotate(180deg); color: var(--accent2); }
+  .faq-a {
+    max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.3s;
+    font-size: 0.92rem; color: var(--muted); padding: 0 1.25rem; line-height: 1.7;
+  }
+  .faq-item.open .faq-a { max-height: 200px; padding: 0 1.25rem 1.1rem; }
 
-  footer .footer-links a:hover { color: var(--text); }
+  /* ── GAMES ── */
+  .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; margin-top: 2rem; }
+  .game-card {
+    background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius);
+    overflow: hidden; transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s; cursor: pointer;
+  }
+  .game-card:hover { border-color: var(--border); transform: translateY(-4px); box-shadow: 0 8px 26px rgba(217,26,42,0.12); }
+  .game-thumb {
+    width: 100%; height: 130px;
+    background: linear-gradient(135deg, var(--bg3), rgba(217,26,42,0.12));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem; transition: transform 0.35s;
+  }
+  .game-card:hover .game-thumb { transform: scale(1.06); }
+  .game-info { padding: 1rem; }
+  .game-info h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .game-status {
+    font-size: 0.75rem; font-family: var(--mono); color: #4cbb7a;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .game-status::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%; background: #4cbb7a;
+    display: inline-block; animation: statusPulse 2s ease-in-out infinite;
+  }
+  @keyframes statusPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 
-  /* TOAST */
-  .toast {
-    position: fixed;
-    bottom: 2rem;
-    right: 1.5rem;
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 0.75rem 1.25rem;
-    border-radius: var(--radius-sm);
-    font-size: 0.9rem;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.25s, transform 0.25s;
-    pointer-events: none;
-    z-index: 999;
+  /* ── GET KEY PAGE ── */
+  .key-hero { text-align: center; padding: 3rem 0 2rem; }
+  .key-hero h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 700; margin-bottom: 0.4rem; }
+  .key-hero p { color: var(--muted); font-size: 1rem; }
+
+  /* Discord join banner */
+  .discord-banner {
+    background: rgba(88,101,242,0.09);
+    border: 1px solid rgba(88,101,242,0.28);
+    border-radius: var(--radius); padding: 1.5rem;
+    text-align: center; margin-bottom: 2rem;
+    animation: fadeInUp 0.5s ease both;
+  }
+  .discord-banner.hidden { display: none; }
+  .discord-banner-emoji { font-size: 2rem; margin-bottom: 0.6rem; }
+  .discord-banner h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .discord-banner p { font-size: 0.88rem; color: var(--muted); margin-bottom: 1rem; }
+  .discord-join-btn {
+    background: #5865f2; color: #fff; border: none; border-radius: var(--radius-sm);
+    padding: 0.6rem 1.5rem; font-size: 0.9rem; font-weight: 600; cursor: pointer;
+    font-family: var(--sans); transition: background 0.2s, transform 0.15s;
+    text-decoration: none; display: inline-block;
+  }
+  .discord-join-btn:hover { background: #4752c4; transform: scale(1.04); }
+
+  /* Loading bar */
+  .verify-loading { display: none; padding: 1.5rem; background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius); margin-bottom: 2rem; }
+  .verify-loading.show { display: block; animation: fadeInUp 0.3s ease both; }
+  .verify-loading-text {
+    font-size: 0.9rem; color: var(--muted); margin-bottom: 0.85rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .spinner {
+    width: 14px; height: 14px; border: 2px solid var(--border2);
+    border-top-color: #5865f2; border-radius: 50%;
+    animation: spin 0.8s linear infinite; display: inline-block; flex-shrink: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .progress-bar-track { width: 100%; height: 5px; background: var(--border2); border-radius: 3px; overflow: hidden; }
+  .progress-bar-fill {
+    height: 100%; background: linear-gradient(90deg, #5865f2, #7289da);
+    width: 0%; transition: width 0.12s linear; border-radius: 3px;
+  }
+  .verify-pct { font-size: 0.78rem; font-family: var(--mono); color: var(--muted); margin-top: 0.5rem; text-align: right; }
+
+  /* Success */
+  .verify-success {
+    display: none; background: rgba(76,187,122,0.08);
+    border: 1px solid rgba(76,187,122,0.22); border-radius: var(--radius);
+    padding: 0.9rem 1.25rem; margin-bottom: 2rem;
+    align-items: center; gap: 0.75rem; font-size: 0.9rem; color: #4cbb7a; font-weight: 500;
+  }
+  .verify-success.show { display: flex; animation: fadeInUp 0.4s ease both; }
+
+  /* Provider cards */
+  .providers-label { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+  .providers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-bottom: 1rem; }
+
+  .provider-card {
+    background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius);
+    padding: 1.5rem; position: relative;
+    transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
+  }
+  .provider-card:hover { border-color: var(--border); transform: translateY(-3px); box-shadow: 0 8px 26px rgba(217,26,42,0.1); }
+  .provider-card.recommended { border-color: rgba(217,26,42,0.45); }
+
+  .provider-badge {
+    position: absolute; top: -11px; left: 1rem;
+    background: var(--accent); color: #fff; font-size: 0.64rem; font-weight: 700;
+    padding: 0.2rem 0.75rem; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.07em;
   }
 
+  .provider-name {
+    font-family: var(--mono); font-size: 1rem; font-weight: 700; color: var(--text);
+    margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.5rem;
+  }
+  .provider-name .picon { font-size: 1.1rem; }
+  .provider-desc { font-size: 0.84rem; color: var(--muted); margin-bottom: 1.1rem; line-height: 1.5; }
+
+  .get-key-btn {
+    display: block; width: 100%; text-align: center; background: var(--accent); color: #fff;
+    border: none; border-radius: var(--radius-sm); padding: 0.65rem 1rem;
+    font-size: 0.9rem; font-weight: 600; cursor: pointer; font-family: var(--sans);
+    text-decoration: none; transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  }
+  .get-key-btn:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(217,26,42,0.38); }
+  .get-key-btn.alt { background: transparent; border: 1px solid var(--border2); color: var(--text); }
+  .get-key-btn.alt:hover { border-color: var(--accent); background: var(--accent-glow); box-shadow: none; }
+
+  .key-notice { text-align: center; font-size: 0.8rem; color: var(--muted); font-family: var(--mono); margin-top: 0.75rem; margin-bottom: 2.5rem; }
+
+  /* Skip hassle */
+  .hassle-box {
+    background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius); padding: 2rem;
+  }
+  .hassle-box h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .hassle-box > p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+  .hassle-plans { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+  .hassle-plan { background: var(--bg3); border: 1px solid var(--border2); border-radius: var(--radius-sm); padding: 1rem; }
+  .hassle-plan.premium-plan { border-color: rgba(217,26,42,0.3); }
+  .hassle-plan-name { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; color: var(--muted); letter-spacing: 0.07em; margin-bottom: 0.65rem; }
+  .hassle-plan.premium-plan .hassle-plan-name { color: var(--accent2); }
+  .hassle-plan ul { list-style: none; display: flex; flex-direction: column; gap: 0.42rem; }
+  .hassle-plan ul li { font-size: 0.82rem; color: var(--muted); display: flex; align-items: flex-start; gap: 0.4rem; }
+  .neg { color: #e05555; }
+  .pos { color: #4cbb7a; }
+  .hassle-price { font-size: 0.88rem; color: var(--muted); text-align: center; margin-bottom: 1.1rem; }
+  .hassle-price strong { color: var(--text); font-family: var(--mono); font-size: 1rem; }
+
+  /* ── PREMIUM ── */
+  .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; margin-top: 2rem; }
+  .plan-card {
+    background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius);
+    padding: 1.75rem; position: relative;
+    transition: border-color 0.25s, transform 0.2s, box-shadow 0.2s;
+  }
+  .plan-card:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(217,26,42,0.08); }
+  .plan-card.featured { border-color: var(--accent); background: rgba(217,26,42,0.05); }
+  .plan-badge {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--accent); color: #fff; font-size: 0.7rem; font-weight: 700;
+    padding: 0.25rem 0.9rem; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap;
+  }
+  .plan-name { font-family: var(--mono); font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+  .plan-price { font-size: 2.2rem; font-weight: 700; font-family: var(--mono); color: var(--text); margin-bottom: 0.25rem; }
+  .plan-period { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.25rem; }
+  .plan-features { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; }
+  .plan-features li { font-size: 0.9rem; color: var(--muted); display: flex; align-items: center; gap: 0.5rem; }
+  .plan-features li .check { color: #4cbb7a; }
+
+  /* ── CTA BANNER ── */
+  .cta-banner {
+    background: linear-gradient(135deg, rgba(217,26,42,0.12), rgba(255,51,71,0.05));
+    border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 3rem 2rem; text-align: center; margin: 2rem 0;
+    position: relative; overflow: hidden;
+  }
+  .cta-banner::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle at 50% 50%, rgba(217,26,42,0.05) 0%, transparent 60%);
+    animation: rotateSlow 15s linear infinite;
+  }
+  @keyframes rotateSlow { to { transform: rotate(360deg); } }
+  .cta-banner h2 { font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 700; margin-bottom: 0.75rem; position: relative; }
+  .cta-banner p { color: var(--muted); margin-bottom: 1.75rem; position: relative; }
+  .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; }
+
+  /* ── FOOTER ── */
+  footer { border-top: 1px solid var(--border2); padding: 2rem 1.5rem; text-align: center; color: var(--muted); font-size: 0.85rem; position: relative; z-index: 1; }
+  footer .footer-logo { font-family: var(--mono); font-weight: 700; color: var(--accent2); font-size: 1rem; margin-bottom: 0.5rem; }
+  footer .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin: 0.75rem 0; flex-wrap: wrap; }
+  footer .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; cursor: pointer; transition: color 0.2s; }
+  footer .footer-links a:hover { color: var(--text); }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed; bottom: 2rem; right: 1.5rem; z-index: 999;
+    background: var(--bg3); border: 1px solid var(--border); color: var(--text);
+    padding: 0.75rem 1.25rem; border-radius: var(--radius-sm); font-size: 0.9rem;
+    opacity: 0; transform: translateY(10px); transition: opacity 0.25s, transform 0.25s;
+    pointer-events: none;
+  }
   .toast.show { opacity: 1; transform: translateY(0); }
 
-  /* MOBILE */
+  /* ── REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.5s, transform 0.5s; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── MOBILE ── */
   @media (max-width: 640px) {
     .nav-links { display: none; }
     .nav-links.open {
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      top: 64px; left: 0; right: 0;
-      background: var(--bg);
-      border-bottom: 1px solid var(--border2);
-      padding: 1.5rem;
-      gap: 1.25rem;
+      display: flex; flex-direction: column; position: fixed;
+      top: 64px; left: 0; right: 0; background: var(--bg);
+      border-bottom: 1px solid var(--border2); padding: 1.5rem; gap: 1.25rem; z-index: 99;
     }
     .hamburger { display: flex; }
-    .loadstring-code { font-size: 0.65rem; }
+    .loadstring-code { font-size: 0.62rem; }
     section { padding: 3.5rem 1rem; }
+    .hassle-plans { grid-template-columns: 1fr; }
+    .providers-grid { grid-template-columns: 1fr; }
   }
-
-  /* Scroll reveal */
-  .reveal {
-    opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 0.5s, transform 0.5s;
-  }
-  .reveal.visible { opacity: 1; transform: none; }
 </style>
 </head>
 <body>
+
+<div class="bg-particles" id="particles"></div>
 
 <nav>
   <a class="nav-logo" onclick="navigate('home')">ajjan's hub</a>
@@ -698,16 +513,15 @@
   </button>
 </nav>
 
-<!-- HOME PAGE -->
+<!-- ══════════ HOME ══════════ -->
 <div class="page active" id="page-home">
   <div class="hero">
     <div class="hero-bg"></div>
     <div class="hero-grid"></div>
     <div class="hero-content">
-      <div class="hero-badge">✦ free & undetected scripts</div>
+      <div class="hero-badge"><span class="badge-dot"></span> free &amp; undetected scripts</div>
       <h1>ajjan's<br/><span>hub</span></h1>
       <p>Your go-to script hub for the most popular Roblox games. Fast, safe, and always updated.</p>
-
       <div class="loadstring-box">
         <div>
           <div class="loadstring-label">lua</div>
@@ -715,7 +529,6 @@
         </div>
         <button class="copy-btn" onclick="copyLoadstring()">copy</button>
       </div>
-
       <div class="hero-btns">
         <button class="btn-primary" onclick="navigate('getkey')">get your key</button>
         <button class="btn-outline" onclick="navigate('games')">view games</button>
@@ -727,78 +540,38 @@
     <div class="section-tag">why choose us</div>
     <h2 class="section-title">why choose ajjan's hub?</h2>
     <p class="section-sub">built with care by someone who actually loves the roblox community.</p>
-
     <div class="features-grid">
-      <div class="feature-card reveal">
-        <div class="feature-icon">🛡️</div>
-        <h3>undetected</h3>
-        <p>Scripts are frequently updated to stay undetected and safe to use so you can play without worry.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">⚡</div>
-        <h3>best features</h3>
-        <p>Packed with powerful features like auto farming, ESP, speed hacks, and more for every supported game.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">🧹</div>
-        <h3>optimized code</h3>
-        <p>Clean, lightweight scripts that run smoothly without lagging or slowing down your game.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">🔄</div>
-        <h3>auto updates</h3>
-        <p>Scripts update automatically through the loader — always running the latest version without lifting a finger.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">📱</div>
-        <h3>mobile support</h3>
-        <p>Most scripts are compatible with popular Android executors so you can script on the go.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">💜</div>
-        <h3>community driven</h3>
-        <p>Join our Discord for support, updates, and to suggest new games and features to add.</p>
-      </div>
+      <div class="feature-card reveal"><div class="feature-icon">🛡️</div><h3>undetected</h3><p>Scripts are frequently updated to stay undetected and safe to use so you can play without worry.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">⚡</div><h3>best features</h3><p>Packed with powerful features like auto farming, ESP, speed hacks, and more for every supported game.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">🧹</div><h3>optimized code</h3><p>Clean, lightweight scripts that run smoothly without lagging or slowing down your game.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">🔄</div><h3>auto updates</h3><p>Scripts update automatically through the loader — always running the latest version without lifting a finger.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">📱</div><h3>mobile support</h3><p>Most scripts are compatible with popular Android executors so you can script on the go.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">❤️</div><h3>community driven</h3><p>Join our Discord for support, updates, and to suggest new games and features to add.</p></div>
     </div>
   </section>
 
   <section>
     <div class="section-tag">faq</div>
     <h2 class="section-title">frequently asked questions</h2>
-    <div class="faq-list" id="faq">
+    <div class="faq-list">
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          do the scripts work on mobile?
-          <span class="chevron">▾</span>
-        </button>
+        <button class="faq-q" onclick="toggleFaq(this)">do the scripts work on mobile?<span class="chevron">▾</span></button>
         <div class="faq-a">Yes! Most of our scripts are compatible with popular Android executors. iOS support varies depending on the executor you use.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          will I get banned for using these scripts?
-          <span class="chevron">▾</span>
-        </button>
+        <button class="faq-q" onclick="toggleFaq(this)">will I get banned for using these scripts?<span class="chevron">▾</span></button>
         <div class="faq-a">We build every script with safety in mind to minimize detection. While no script is 100% risk-free, we do our best to keep things safe and update regularly.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          how do I get a key?
-          <span class="chevron">▾</span>
-        </button>
-        <div class="faq-a">Head to the "Get Key" page and follow the simple steps. It's free and takes less than a minute. Your key unlocks the script loader.</div>
+        <button class="faq-q" onclick="toggleFaq(this)">how do I get a key?<span class="chevron">▾</span></button>
+        <div class="faq-a">Head to the "Get Key" page, click the provider you prefer, and complete the quick checkpoint. Your key is ready instantly.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          what payment methods are accepted for premium?
-          <span class="chevron">▾</span>
-        </button>
+        <button class="faq-q" onclick="toggleFaq(this)">what payment methods are accepted for premium?<span class="chevron">▾</span></button>
         <div class="faq-a">We accept most major payment methods for premium plans including card and popular digital wallets. Join Discord for more info.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          how do I get help if something isn't working?
-          <span class="chevron">▾</span>
-        </button>
+        <button class="faq-q" onclick="toggleFaq(this)">how do I get help if something isn't working?<span class="chevron">▾</span></button>
         <div class="faq-a">Join our Discord server and head to the #need-help channel — we'll get you sorted as quickly as possible.</div>
       </div>
     </div>
@@ -816,129 +589,105 @@
   </section>
 </div>
 
-<!-- GET KEY PAGE -->
+<!-- ══════════ GET KEY ══════════ -->
 <div class="page" id="page-getkey">
   <section>
-    <div class="section-tag">access</div>
-    <h2 class="section-title">get your free key</h2>
-    <p class="section-sub">Follow these quick steps to get your key and start using ajjan's hub scripts.</p>
-
-    <div class="key-steps">
-      <div class="key-step reveal">
-        <div class="step-num">01</div>
-        <div class="step-body">
-          <h3>join the discord</h3>
-          <p>Head to our Discord server and verify yourself in the #verify channel to get started.</p>
-        </div>
-      </div>
-      <div class="key-step reveal">
-        <div class="step-num">02</div>
-        <div class="step-body">
-          <h3>go to #get-key</h3>
-          <p>Navigate to the #get-key channel inside the Discord and follow the bot instructions.</p>
-        </div>
-      </div>
-      <div class="key-step reveal">
-        <div class="step-num">03</div>
-        <div class="step-body">
-          <h3>copy your key</h3>
-          <p>The bot will generate a unique key for you. Copy it and keep it safe — don't share it!</p>
-        </div>
-      </div>
-      <div class="key-step reveal">
-        <div class="step-num">04</div>
-        <div class="step-body">
-          <h3>paste into executor</h3>
-          <p>Run the loadstring in your executor and paste your key when prompted. You're in!</p>
-        </div>
-      </div>
+    <div class="key-hero">
+      <div class="section-tag" style="text-align:center;">access</div>
+      <h2>get your key</h2>
+      <p>choose a provider below to generate your free script key</p>
     </div>
 
-    <div class="key-box reveal">
-      <div style="font-size:2rem; margin-bottom:0.75rem;">🔑</div>
-      <strong>ready to get your key?</strong>
+    <!-- Discord banner (hidden once verified) -->
+    <div class="discord-banner" id="discord-banner">
+      <div class="discord-banner-emoji">🔑</div>
+      <h3>ready to get your key?</h3>
       <p>Join our Discord to receive your free key instantly through our bot.</p>
-      <br/>
-      <a class="btn-primary" href="https://discord.gg/" target="_blank" style="display:inline-block;">join discord to get key</a>
+      <a href="https://discord.gg/" target="_blank" class="discord-join-btn" onclick="startVerify()">join discord to get key</a>
+    </div>
+
+    <!-- Loading bar -->
+    <div class="verify-loading" id="verify-loading">
+      <div class="verify-loading-text"><span class="spinner"></span> verifying your discord membership...</div>
+      <div class="progress-bar-track"><div class="progress-bar-fill" id="progress-fill"></div></div>
+      <div class="verify-pct" id="verify-pct">0%</div>
+    </div>
+
+    <!-- Verified -->
+    <div class="verify-success" id="verify-success">
+      ✅ &nbsp; discord verified — you're good to get your key below!
+    </div>
+
+    <!-- Provider cards -->
+    <p class="providers-label">choose a provider</p>
+    <div class="providers-grid">
+      <div class="provider-card recommended reveal">
+        <div class="provider-badge">recommended</div>
+        <div class="provider-name"><span class="picon">🔗</span> linkvertise</div>
+        <div class="provider-desc">complete a quick checkpoint to get your key instantly</div>
+        <a class="get-key-btn" href="https://ads.luarmor.net/get_key?for=Linkvertise-OdvXzHvCnzgD" target="_blank">get key</a>
+      </div>
+      <div class="provider-card reveal">
+        <div class="provider-name"><span class="picon">🧪</span> loot labs</div>
+        <div class="provider-desc">alternative key provider with a slightly longer process</div>
+        <a class="get-key-btn alt" href="https://ads.luarmor.net/get_key?for=Loot_Labs-UEYpcCOAGTmu" target="_blank">get key</a>
+      </div>
+    </div>
+    <p class="key-notice">keys expire after 12 hours — you can generate a new one anytime from either provider.</p>
+
+    <!-- Skip the hassle -->
+    <div class="hassle-box reveal">
+      <h3>skip the hassle</h3>
+      <p>tired of getting keys every 12 hours?</p>
+      <div class="hassle-plans">
+        <div class="hassle-plan">
+          <div class="hassle-plan-name">free plan</div>
+          <ul>
+            <li><span class="neg">−</span> key expires every 12h</li>
+            <li><span class="neg">−</span> checkpoint each time</li>
+            <li><span class="neg">−</span> wait for key generation</li>
+          </ul>
+        </div>
+        <div class="hassle-plan premium-plan">
+          <div class="hassle-plan-name">premium</div>
+          <ul>
+            <li><span class="pos">+</span> no key system at all</li>
+            <li><span class="pos">+</span> lifetime access forever</li>
+            <li><span class="pos">+</span> early access to scripts</li>
+          </ul>
+        </div>
+      </div>
+      <p class="hassle-price">one-time payment of <strong>$9.99</strong>, yours forever</p>
+      <a class="btn-primary" onclick="navigate('premium')" style="display:block;text-align:center;max-width:240px;margin:0 auto;cursor:pointer;">get premium</a>
     </div>
   </section>
 </div>
 
-<!-- GAMES PAGE -->
+<!-- ══════════ GAMES ══════════ -->
 <div class="page" id="page-games">
   <section>
     <div class="section-tag">supported games</div>
     <h2 class="section-title">supported games</h2>
     <p class="section-sub">Scripts available for the most popular Roblox games, updated regularly.</p>
-
     <div class="games-grid">
-      <div class="game-card reveal">
-        <div class="game-thumb">⚔️</div>
-        <div class="game-info">
-          <h3>Blox Fruits</h3>
-          <div class="game-status">working</div>
-        </div>
-      </div>
-      <div class="game-card reveal">
-        <div class="game-thumb">🌊</div>
-        <div class="game-info">
-          <h3>King Legacy</h3>
-          <div class="game-status">working</div>
-        </div>
-      </div>
-      <div class="game-card reveal">
-        <div class="game-thumb">🏆</div>
-        <div class="game-info">
-          <h3>Pet Simulator X</h3>
-          <div class="game-status">working</div>
-        </div>
-      </div>
-      <div class="game-card reveal">
-        <div class="game-thumb">🧪</div>
-        <div class="game-info">
-          <h3>Anime Adventures</h3>
-          <div class="game-status">working</div>
-        </div>
-      </div>
-      <div class="game-card reveal">
-        <div class="game-thumb">🗡️</div>
-        <div class="game-info">
-          <h3>Da Hood</h3>
-          <div class="game-status">working</div>
-        </div>
-      </div>
-      <div class="game-card reveal">
-        <div class="game-thumb">🏘️</div>
-        <div class="game-info">
-          <h3>Brookhaven</h3>
-          <div class="game-status">working</div>
-        </div>
-      </div>
-      <div class="game-card reveal">
-        <div class="game-thumb">🌋</div>
-        <div class="game-info">
-          <h3>Shindo Life</h3>
-          <div class="game-status">working</div>
-        </div>
-      </div>
-      <div class="game-card reveal">
-        <div class="game-thumb">⭐</div>
-        <div class="game-info">
-          <h3>more coming soon</h3>
-          <div class="game-status" style="color:var(--accent);"> </div>
-        </div>
-      </div>
+      <div class="game-card reveal"><div class="game-thumb">⚔️</div><div class="game-info"><h3>Blox Fruits</h3><div class="game-status">working</div></div></div>
+      <div class="game-card reveal"><div class="game-thumb">🌊</div><div class="game-info"><h3>King Legacy</h3><div class="game-status">working</div></div></div>
+      <div class="game-card reveal"><div class="game-thumb">🏆</div><div class="game-info"><h3>Pet Simulator X</h3><div class="game-status">working</div></div></div>
+      <div class="game-card reveal"><div class="game-thumb">🧪</div><div class="game-info"><h3>Anime Adventures</h3><div class="game-status">working</div></div></div>
+      <div class="game-card reveal"><div class="game-thumb">🗡️</div><div class="game-info"><h3>Da Hood</h3><div class="game-status">working</div></div></div>
+      <div class="game-card reveal"><div class="game-thumb">🏘️</div><div class="game-info"><h3>Brookhaven</h3><div class="game-status">working</div></div></div>
+      <div class="game-card reveal"><div class="game-thumb">🌋</div><div class="game-info"><h3>Shindo Life</h3><div class="game-status">working</div></div></div>
+      <div class="game-card reveal"><div class="game-thumb">⭐</div><div class="game-info"><h3>more coming soon</h3><div class="game-status" style="color:var(--accent);background:none;gap:0">coming soon</div></div></div>
     </div>
   </section>
 </div>
 
-<!-- PREMIUM PAGE -->
+<!-- ══════════ PREMIUM ══════════ -->
 <div class="page" id="page-premium">
   <section>
     <div class="section-tag">premium</div>
     <h2 class="section-title">upgrade your experience</h2>
     <p class="section-sub">Unlock exclusive scripts, priority support, and premium-only features.</p>
-
     <div class="plans-grid">
       <div class="plan-card reveal">
         <div class="plan-name">free</div>
@@ -952,34 +701,19 @@
         </ul>
         <button class="btn-outline" onclick="navigate('getkey')" style="width:100%;">get free key</button>
       </div>
-
       <div class="plan-card featured reveal">
         <div class="plan-badge">most popular</div>
         <div class="plan-name">premium</div>
-        <div class="plan-price">$4.99</div>
-        <div class="plan-period">per month</div>
+        <div class="plan-price">$9.99</div>
+        <div class="plan-period">one-time payment</div>
         <ul class="plan-features">
-          <li><span class="check">✓</span> Everything in Free</li>
-          <li><span class="check">✓</span> Premium-only scripts</li>
+          <li><span class="check">✓</span> No key system at all</li>
+          <li><span class="check">✓</span> Lifetime access forever</li>
+          <li><span class="check">✓</span> Early access to scripts</li>
           <li><span class="check">✓</span> Priority support</li>
-          <li><span class="check">✓</span> Early access to new scripts</li>
           <li><span class="check">✓</span> Exclusive Discord role</li>
         </ul>
         <a class="btn-primary" href="https://discord.gg/" target="_blank" style="display:block;text-align:center;">get premium</a>
-      </div>
-
-      <div class="plan-card reveal">
-        <div class="plan-name">lifetime</div>
-        <div class="plan-price">$14.99</div>
-        <div class="plan-period">one-time payment</div>
-        <ul class="plan-features">
-          <li><span class="check">✓</span> Everything in Premium</li>
-          <li><span class="check">✓</span> Never pay again</li>
-          <li><span class="check">✓</span> Lifetime updates</li>
-          <li><span class="check">✓</span> OG member badge</li>
-          <li><span class="check">✓</span> Custom script requests</li>
-        </ul>
-        <a class="btn-outline" href="https://discord.gg/" target="_blank" style="display:block;text-align:center;">get lifetime</a>
       </div>
     </div>
   </section>
@@ -997,54 +731,126 @@
   <p style="margin-top:0.5rem">not affiliated with Roblox Corporation. use scripts responsibly.</p>
 </footer>
 
-<div class="toast" id="toast">✓ copied to clipboard</div>
+<div class="toast" id="toast"></div>
 
 <script>
-function navigate(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + page).classList.add('active');
-  document.querySelectorAll('.nav-links a[data-page]').forEach(a => {
-    a.classList.toggle('active', a.dataset.page === page);
+// ── Particles ──
+(function(){
+  const c = document.getElementById('particles');
+  for(let i = 0; i < 20; i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const s = Math.random()*4+2;
+    p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;--dur:${6+Math.random()*10}s;--delay:${Math.random()*9}s;`;
+    c.appendChild(p);
+  }
+})();
+
+// ── Navigate ──
+function navigate(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelectorAll('.nav-links a[data-page]').forEach(a=>{
+    a.classList.toggle('active', a.dataset.page===page);
   });
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({top:0,behavior:'smooth'});
   document.getElementById('nav-links').classList.remove('open');
-  observeReveal();
+  setTimeout(observeReveal,60);
+  if(page==='getkey') initKeyPage();
 }
 
-function toggleMenu() {
+function toggleMenu(){
   document.getElementById('nav-links').classList.toggle('open');
 }
 
-function toggleFaq(btn) {
+// ── FAQ ──
+function toggleFaq(btn){
   const item = btn.closest('.faq-item');
-  const isOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-  if (!isOpen) item.classList.add('open');
+  const open = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  if(!open) item.classList.add('open');
 }
 
-function copyLoadstring() {
-  const text = document.getElementById('loadstring-text').textContent;
-  navigator.clipboard.writeText(text).then(() => {
-    const t = document.getElementById('toast');
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2000);
-  });
+// ── Copy ──
+function copyLoadstring(){
+  navigator.clipboard.writeText(document.getElementById('loadstring-text').textContent)
+    .then(()=>showToast('✅ copied to clipboard'));
 }
 
-function observeReveal() {
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+// ── Key page ──
+function initKeyPage(){
+  const verified = localStorage.getItem('ajjan_verified');
+  const banner   = document.getElementById('discord-banner');
+  const loading  = document.getElementById('verify-loading');
+  const success  = document.getElementById('verify-success');
+  loading.classList.remove('show');
+  if(verified){
+    banner.classList.add('hidden');
+    success.classList.add('show');
+  } else {
+    banner.classList.remove('hidden');
+    success.classList.remove('show');
+    document.getElementById('progress-fill').style.width='0%';
+    document.getElementById('verify-pct').textContent='0%';
+  }
+}
+
+function startVerify(){
+  // Let the link open, then start verifying after 1.5s
+  setTimeout(()=>{
+    const banner  = document.getElementById('discord-banner');
+    const loading = document.getElementById('verify-loading');
+    const fill    = document.getElementById('progress-fill');
+    const pct     = document.getElementById('verify-pct');
+    const success = document.getElementById('verify-success');
+
+    banner.classList.add('hidden');
+    loading.classList.add('show');
+
+    let v = 0;
+    const iv = setInterval(()=>{
+      v += Math.random()*3.5+1;
+      if(v >= 100){
+        v = 100;
+        fill.style.width='100%';
+        pct.textContent='100%';
+        clearInterval(iv);
+        setTimeout(()=>{
+          loading.classList.remove('show');
+          success.classList.add('show');
+          localStorage.setItem('ajjan_verified','1');
+          showToast('✅ discord verified!');
+        }, 450);
+      } else {
+        fill.style.width=v+'%';
+        pct.textContent=Math.floor(v)+'%';
+      }
+    }, 95);
+  }, 1500);
+}
+
+// ── Reveal on scroll ──
+function observeReveal(){
   const els = document.querySelectorAll('.reveal:not(.visible)');
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 80);
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting){
+        setTimeout(()=>e.target.classList.add('visible'), i*80);
         obs.unobserve(e.target);
       }
     });
-  }, { threshold: 0.1 });
-  els.forEach(el => obs.observe(el));
+  },{threshold:0.08});
+  els.forEach(el=>obs.observe(el));
 }
 
 observeReveal();
+initKeyPage();
 </script>
 </body>
 </html>
