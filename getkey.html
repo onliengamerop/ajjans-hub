@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="description" content="Get your free key — Ajjan's Hub" />
-<title>Ajjans</title>
+<title>Ajjans — Get Key</title>
 <link rel="icon" type="image/png" href="https://i.ibb.co/fVKG21qT/image.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -48,24 +48,35 @@
   main { padding-top: 64px; position: relative; z-index: 1; animation: fadeInPage 0.4s ease both; }
   @keyframes fadeInPage { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-  section { padding: 5rem 1.5rem; max-width: 1000px; margin: 0 auto; }
+  section { padding: 4rem 1.5rem; max-width: 1000px; margin: 0 auto; }
   .section-tag { font-family: var(--mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
 
-  .key-hero { text-align: center; padding: 3rem 0 2rem; }
-  .key-hero h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 700; margin-bottom: 0.4rem; }
-  .key-hero p { color: var(--muted); font-size: 1rem; }
+  /* ── Hero ── */
+  .key-hero { text-align: center; padding: 2.5rem 0 0.5rem; }
+  .key-hero .pill { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(217,26,42,0.10); border: 1px solid rgba(217,26,42,0.22); border-radius: 999px; padding: 0.28rem 1rem 0.28rem 0.75rem; font-size: 0.78rem; font-family: var(--mono); color: var(--muted); margin-bottom: 1.2rem; letter-spacing: 0.05em; }
+  .pill-dot { width: 7px; height: 7px; border-radius: 50%; background: #4cbb7a; flex-shrink: 0; animation: blink-dot 1.8s ease-in-out infinite; }
+  @keyframes blink-dot { 0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(76,187,122,0.5); } 50% { opacity: 0.35; box-shadow: 0 0 0 4px rgba(76,187,122,0); } }
+  .pill-text { color: var(--accent2); font-weight: 700; }
+  .key-hero h2 { font-size: clamp(1.8rem, 4.5vw, 2.8rem); font-weight: 700; margin-bottom: 0.5rem; }
+  .key-hero .subtitle { color: var(--muted); font-size: 1rem; max-width: 480px; margin: 0 auto 2rem; }
 
-  /* ── Discord banner ── */
-  .discord-banner { background: rgba(88,101,242,0.09); border: 1px solid rgba(88,101,242,0.28); border-radius: var(--radius); padding: 1.5rem; text-align: center; margin-bottom: 2rem; animation: fadeInUp 0.5s ease both; }
+  /* ── Step 1 Discord banner ── */
+  .step-label { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+  .step-label::before { content: ''; display: inline-block; width: 20px; height: 20px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 0.65rem; font-weight: 700; text-align: center; line-height: 20px; }
+  .step-1-label::before { content: '1'; }
+  .step-2-label::before { content: '2'; }
+
+  .discord-banner { background: rgba(88,101,242,0.07); border: 1px solid rgba(88,101,242,0.22); border-radius: var(--radius); padding: 1.75rem; margin-bottom: 2.5rem; animation: fadeInUp 0.5s ease both; }
   .discord-banner.hidden { display: none; }
-  .discord-banner-emoji { font-size: 2rem; margin-bottom: 0.6rem; }
-  .discord-banner h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.25rem; }
-  .discord-banner p { font-size: 0.88rem; color: var(--muted); margin-bottom: 1rem; }
-  .discord-join-btn { background: #5865f2; color: #fff; border: none; border-radius: var(--radius-sm); padding: 0.6rem 1.5rem; font-size: 0.9rem; font-weight: 600; cursor: pointer; font-family: var(--sans); transition: background 0.2s, transform 0.15s; text-decoration: none; display: inline-block; }
+  .discord-banner-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+  .discord-banner-text h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .discord-banner-text p { font-size: 0.88rem; color: var(--muted); line-height: 1.55; max-width: 480px; }
+  .discord-join-btn { background: #5865f2; color: #fff; border: none; border-radius: var(--radius-sm); padding: 0.7rem 1.6rem; font-size: 0.9rem; font-weight: 600; cursor: pointer; font-family: var(--sans); transition: background 0.2s, transform 0.15s; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; white-space: nowrap; flex-shrink: 0; }
   .discord-join-btn:hover { background: #4752c4; transform: scale(1.04); }
+  .discord-join-btn svg { width: 18px; height: 18px; fill: currentColor; flex-shrink: 0; }
 
   /* ── Verify loading ── */
-  .verify-loading { display: none; padding: 1.5rem; background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius); margin-bottom: 2rem; }
+  .verify-loading { display: none; padding: 1.5rem; background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius); margin-bottom: 2.5rem; }
   .verify-loading.show { display: block; animation: fadeInUp 0.3s ease both; }
   .verify-loading-text { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
   .spinner { width: 14px; height: 14px; border: 2px solid var(--border2); border-top-color: #5865f2; border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; flex-shrink: 0; }
@@ -73,8 +84,6 @@
   .progress-bar-track { width: 100%; height: 5px; background: var(--border2); border-radius: 3px; overflow: hidden; }
   .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #5865f2, #7289da); width: 0%; transition: width 0.3s ease; border-radius: 3px; }
   .verify-pct { font-size: 0.78rem; font-family: var(--mono); color: var(--muted); margin-top: 0.5rem; text-align: right; }
-
-  /* Waiting-for-return sub-state */
   .verify-waiting { display: none; margin-top: 1rem; background: rgba(88,101,242,0.07); border: 1px solid rgba(88,101,242,0.2); border-radius: var(--radius-sm); padding: 0.9rem 1.1rem; font-size: 0.84rem; color: var(--muted); line-height: 1.55; }
   .verify-waiting.show { display: block; animation: fadeInUp 0.3s ease both; }
   .verify-waiting strong { color: var(--text); display: block; margin-bottom: 0.3rem; }
@@ -83,45 +92,62 @@
   .verify-cancel:hover { color: var(--text); border-color: var(--accent); }
 
   /* ── Success ── */
-  .verify-success { display: none; background: rgba(76,187,122,0.08); border: 1px solid rgba(76,187,122,0.22); border-radius: var(--radius); padding: 0.9rem 1.25rem; margin-bottom: 2rem; align-items: center; gap: 0.75rem; font-size: 0.9rem; color: #4cbb7a; font-weight: 500; }
+  .verify-success { display: none; background: rgba(76,187,122,0.08); border: 1px solid rgba(76,187,122,0.22); border-radius: var(--radius); padding: 0.9rem 1.25rem; margin-bottom: 2.5rem; align-items: center; gap: 0.75rem; font-size: 0.9rem; color: #4cbb7a; font-weight: 500; }
   .verify-success.show { display: flex; animation: fadeInUp 0.4s ease both; }
 
-  /* ── Providers ── */
-  .key-providers-section { display: none; }
-  .key-providers-section.show { display: block; animation: fadeInUp 0.4s ease both; }
-  .providers-label { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
-  .providers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-bottom: 1rem; }
-  .provider-card { background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius); padding: 1.75rem 1.5rem 1.5rem; position: relative; transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s; text-align: center; }
-  .provider-card:hover { border-color: var(--border); transform: translateY(-3px); box-shadow: 0 8px 26px rgba(217,26,42,0.1); }
+  /* ── Providers grid ── */
+  .providers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-bottom: 1rem; }
+
+  /* ── Provider card ── */
+  .provider-card { background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius); padding: 1.75rem 1.5rem 1.5rem; position: relative; transition: border-color 0.25s, transform 0.2s; text-align: center; display: flex; flex-direction: column; }
   .provider-card.recommended { border-color: rgba(217,26,42,0.45); }
-  .provider-badge { position: absolute; top: -11px; left: 1rem; background: var(--accent); color: #fff; font-size: 0.64rem; font-weight: 700; padding: 0.2rem 0.75rem; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.07em; }
-  .provider-icon-img { width: 60px; height: 60px; object-fit: contain; border-radius: 10px; margin: 0 auto 0.9rem; display: block; transition: transform 0.25s, filter 0.25s; }
-  .provider-card:hover .provider-icon-img { transform: scale(1.1); filter: brightness(1.1); }
-  .provider-name { font-family: var(--mono); font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; display: flex; align-items: center; justify-content: center; }
-  .provider-desc { font-size: 0.84rem; color: var(--muted); margin-bottom: 1.1rem; line-height: 1.5; }
-  .get-key-btn { display: block; width: 100%; text-align: center; background: var(--accent); color: #fff; border: none; border-radius: var(--radius-sm); padding: 0.65rem 1rem; font-size: 0.9rem; font-weight: 600; cursor: pointer; font-family: var(--sans); text-decoration: none; transition: background 0.2s, transform 0.15s, box-shadow 0.2s; }
+  .provider-card.premium-card { border-color: rgba(255,180,50,0.35); background: linear-gradient(160deg, #120008 0%, #0f0009 100%); }
+  .provider-card.locked { opacity: 0.55; pointer-events: none; cursor: not-allowed; }
+  .provider-card.locked .get-key-btn,
+  .provider-card.locked .get-premium-btn { cursor: not-allowed; opacity: 0.7; }
+  .provider-card:not(.locked):hover { border-color: var(--border); transform: translateY(-3px); }
+  .provider-card.recommended:not(.locked):hover { box-shadow: 0 8px 26px rgba(217,26,42,0.12); }
+  .provider-card.premium-card:not(.locked):hover { box-shadow: 0 8px 26px rgba(255,180,50,0.1); }
+
+  .provider-badge { position: absolute; top: -11px; left: 1rem; font-size: 0.64rem; font-weight: 700; padding: 0.2rem 0.75rem; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.07em; }
+  .provider-badge.red { background: var(--accent); color: #fff; }
+  .provider-badge.gold { background: linear-gradient(90deg, #c8952a, #e8b84b); color: #1a0a00; }
+  .provider-badge.gray { background: rgba(255,255,255,0.1); color: var(--muted); }
+
+  .provider-icon-wrap { width: 64px; height: 64px; border-radius: 14px; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .provider-icon-wrap.lv-bg { background: #1e1e2e; }
+  .provider-icon-wrap.ll-bg { background: #0d1a1a; }
+  .provider-icon-wrap.pm-bg { background: linear-gradient(135deg, #2a1200, #1a0800); border: 1px solid rgba(255,180,50,0.2); }
+  .provider-icon-img { width: 48px; height: 48px; object-fit: contain; display: block; transition: transform 0.25s; }
+  .provider-card:not(.locked):hover .provider-icon-img { transform: scale(1.1); }
+  .premium-icon { font-size: 2rem; line-height: 1; }
+
+  .provider-name { font-family: var(--mono); font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.15rem; }
+  .provider-tag { font-size: 0.72rem; font-family: var(--mono); color: var(--muted); margin-bottom: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .provider-tag.fast { color: #4cbb7a; }
+  .provider-tag.slow { color: #e05555; }
+  .provider-tag.instant { color: #e8b84b; }
+
+  .provider-desc { font-size: 0.83rem; color: var(--muted); margin-bottom: 1.1rem; line-height: 1.55; text-align: left; flex: 1; }
+
+  .provider-features { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.25rem; text-align: left; }
+  .provider-features li { font-size: 0.82rem; color: var(--muted); display: flex; align-items: flex-start; gap: 0.45rem; line-height: 1.4; }
+  .feat-pos { color: #4cbb7a; font-weight: 700; flex-shrink: 0; }
+  .feat-neu { color: #a08088; flex-shrink: 0; }
+
+  .get-key-btn { display: block; width: 100%; text-align: center; background: var(--accent); color: #fff; border: none; border-radius: var(--radius-sm); padding: 0.7rem 1rem; font-size: 0.9rem; font-weight: 600; cursor: pointer; font-family: var(--sans); text-decoration: none; transition: background 0.2s, transform 0.15s, box-shadow 0.2s; }
   .get-key-btn:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(217,26,42,0.38); }
   .get-key-btn.alt { background: transparent; border: 1px solid var(--border2); color: var(--text); }
   .get-key-btn.alt:hover { border-color: var(--accent); background: var(--accent-glow); box-shadow: none; }
+  .get-key-btn.locked-btn { background: rgba(255,255,255,0.06); color: var(--muted); border: 1px solid var(--border2); cursor: not-allowed; }
+  .get-key-btn.locked-btn:hover { background: rgba(255,255,255,0.06); transform: none; box-shadow: none; }
 
-  .key-notice { text-align: center; font-size: 0.8rem; color: var(--muted); font-family: var(--mono); margin-top: 0.75rem; margin-bottom: 2.5rem; }
+  .get-premium-btn { display: block; width: 100%; text-align: center; background: linear-gradient(90deg, #c8952a, #e8b84b); color: #1a0a00; border: none; border-radius: var(--radius-sm); padding: 0.7rem 1rem; font-size: 0.9rem; font-weight: 700; cursor: pointer; font-family: var(--sans); text-decoration: none; transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s; }
+  .get-premium-btn:hover { opacity: 0.88; transform: translateY(-1px); box-shadow: 0 4px 18px rgba(255,180,50,0.3); }
 
-  /* ── Hassle box ── */
-  .hassle-box { background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius); padding: 2rem; }
-  .hassle-box h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.3rem; }
-  .hassle-box > p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
-  .hassle-plans { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
-  .hassle-plan { background: var(--bg3); border: 1px solid var(--border2); border-radius: var(--radius-sm); padding: 1rem; }
-  .hassle-plan.premium-plan { border-color: rgba(217,26,42,0.3); }
-  .hassle-plan-name { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; color: var(--muted); letter-spacing: 0.07em; margin-bottom: 0.65rem; }
-  .hassle-plan.premium-plan .hassle-plan-name { color: var(--accent2); }
-  .hassle-plan ul { list-style: none; display: flex; flex-direction: column; gap: 0.42rem; }
-  .hassle-plan ul li { font-size: 0.82rem; color: var(--muted); display: flex; align-items: flex-start; gap: 0.4rem; }
-  .neg { color: #e05555; } .pos { color: #4cbb7a; }
-  .hassle-price { font-size: 0.88rem; color: var(--muted); text-align: center; margin-bottom: 1.1rem; }
-  .hassle-price strong { color: var(--text); font-family: var(--mono); font-size: 1rem; }
-  .btn-primary { background: var(--accent); color: #fff; border: none; border-radius: var(--radius-sm); padding: 0.75rem 1.75rem; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: var(--sans); text-decoration: none; display: inline-block; transition: background 0.2s, transform 0.15s, box-shadow 0.2s; }
-  .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(217,26,42,0.42); }
+  .locked-hint { font-size: 0.75rem; color: var(--muted); font-family: var(--mono); text-align: center; margin-top: 0.5rem; opacity: 0.8; }
+
+  .key-notice { text-align: center; font-size: 0.8rem; color: var(--muted); font-family: var(--mono); margin-top: 0.75rem; margin-bottom: 3rem; }
 
   @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -134,13 +160,19 @@
   footer .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
   footer .footer-links a:hover { color: var(--text); }
 
+  @media (max-width: 768px) {
+    .providers-grid { grid-template-columns: 1fr; }
+    .discord-banner-inner { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 900px) and (min-width: 769px) {
+    .providers-grid { grid-template-columns: repeat(2, 1fr); }
+    .provider-card.premium-card { grid-column: 1 / -1; max-width: 380px; margin: 0 auto; width: 100%; }
+  }
   @media (max-width: 640px) {
     .nav-links { display: none; }
     .nav-links.open { display: flex; flex-direction: column; position: fixed; top: 64px; left: 0; right: 0; background: var(--bg); border-bottom: 1px solid var(--border2); padding: 1.5rem; gap: 1.25rem; z-index: 99; }
     .hamburger { display: flex; }
-    section { padding: 3.5rem 1rem; }
-    .hassle-plans { grid-template-columns: 1fr; }
-    .providers-grid { grid-template-columns: 1fr; }
+    section { padding: 3rem 1rem; }
     .nav-logo-img { height: 36px; }
   }
 </style>
@@ -166,27 +198,33 @@
 
 <main>
   <section>
+
     <div class="key-hero">
-      <div class="section-tag" style="text-align:center;">access</div>
+      <div class="pill"><span class="pill-dot"></span><span class="pill-text">100% free</span></div>
       <h2>get your key</h2>
-      <p>join our discord to receive your free key instantly</p>
+      <p class="subtitle">join our discord, pick a provider, breeze through the checkpoints, and copy your key — paste it into the script and you're in.</p>
     </div>
 
-    <!-- Step 1: Initial CTA -->
+    <!-- Step 1: Discord CTA -->
+    <div class="step-label step-1-label" id="step1-label">step 1 — join our discord first</div>
     <div class="discord-banner" id="discord-banner">
-      <div class="discord-banner-emoji">🔑</div>
-      <h3>ready to get your key?</h3>
-      <p>Join our Discord to receive your free key instantly through our bot.</p>
-      <a href="https://discord.gg/2aVa3vkV3S" target="_blank" class="discord-join-btn" onclick="startVerify()">join discord to get key</a>
+      <div class="discord-banner-inner">
+        <div class="discord-banner-text">
+          <h3>join our Discord to unlock keys</h3>
+          <p>Click the button to join. Once you're in the server, come back to this page — the key buttons will unlock automatically. It's free and takes less than a minute.</p>
+        </div>
+        <a href="https://discord.gg/2aVa3vkV3S" target="_blank" class="discord-join-btn" onclick="startVerify()">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+          join discord to get key
+        </a>
+      </div>
     </div>
 
-    <!-- Step 2: Loading / progress -->
+    <!-- Verify loading -->
     <div class="verify-loading" id="verify-loading">
       <div class="verify-loading-text"><span class="spinner"></span> <span id="verify-status-text">verifying your discord membership...</span></div>
       <div class="progress-bar-track"><div class="progress-bar-fill" id="progress-fill"></div></div>
       <div class="verify-pct" id="verify-pct">0%</div>
-
-      <!-- Shown after the user has left the tab -->
       <div class="verify-waiting" id="verify-waiting">
         <strong>⏳ waiting for you to join Discord...</strong>
         After joining, switch back to this tab — verification will complete automatically.
@@ -195,61 +233,86 @@
       </div>
     </div>
 
-    <!-- Step 3: Verified -->
-    <div class="verify-success" id="verify-success">✅ &nbsp; discord verified — you're good to get your key below!</div>
+    <!-- Verified success -->
+    <div class="verify-success" id="verify-success">✅ &nbsp; discord verified — keys are now unlocked below!</div>
 
-    <!-- Step 4: Providers -->
-    <div class="key-providers-section" id="key-providers-section">
-      <p class="providers-label">choose a provider</p>
+    <!-- Step 2: Providers (always visible, locked until verified) -->
+    <div id="providers-section">
+      <div class="step-label step-2-label" style="margin-bottom: 1rem;">step 2 — choose a provider</div>
+
       <div class="providers-grid">
-        <div class="provider-card recommended">
-          <div class="provider-badge">recommended</div>
-          <img class="provider-icon-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTW-XABmm-L3yNZfbpV12zc5Pz1pHGzuD3wPA&s" alt="Linkvertise" onerror="this.style.opacity='0.3'" />
-          <div class="provider-name">linkvertise</div>
-          <div class="provider-desc">complete a quick checkpoint to get your key instantly</div>
-          <a class="get-key-btn" href="https://ads.luarmor.net/get_key?for=Ajjan_key_system-QYxOdgnlCAzW" target="_blank">get key</a>
-        </div>
-        <div class="provider-card">
-          <img class="provider-icon-img" src="https://i.tracxn.com/logo/company/lootlabs_gg_8b4fb07f-4591-439e-8ebb-72170df55c4f" alt="Loot Labs" onerror="this.style.opacity='0.3'" />
-          <div class="provider-name">loot labs</div>
-          <div class="provider-desc">alternative key provider with a slightly longer process</div>
-          <a class="get-key-btn alt" href="https://ads.luarmor.net/get_key?for=ajjan_hub_lootlabs-hHxPaqwgzfzK" target="_blank">get key</a>
-        </div>
-      </div>
-      <p class="key-notice">keys expire after 12 hours — you can generate a new one anytime from either provider.</p>
 
-      <div class="hassle-box">
-        <h3>skip the hassle</h3>
-        <p>tired of getting keys every 12 hours?</p>
-        <div class="hassle-plans">
-          <div class="hassle-plan">
-            <div class="hassle-plan-name">free plan</div>
-            <ul>
-              <li><span class="neg">−</span> key expires every 12h</li>
-              <li><span class="neg">−</span> checkpoint each time</li>
-              <li><span class="neg">−</span> wait for key generation</li>
-            </ul>
+        <!-- Linkvertise -->
+        <div class="provider-card recommended locked" id="card-lv">
+          <div class="provider-badge red">recommended</div>
+          <div class="provider-icon-wrap lv-bg">
+            <img class="provider-icon-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTW-XABmm-L3yNZfbpV12zc5Pz1pHGzuD3wPA&s" alt="Linkvertise" onerror="this.style.opacity='0.3'" />
           </div>
-          <div class="hassle-plan premium-plan">
-            <div class="hassle-plan-name">premium</div>
-            <ul>
-              <li><span class="pos">+</span> no key system at all</li>
-              <li><span class="pos">+</span> lifetime access forever</li>
-              <li><span class="pos">+</span> early access to scripts</li>
-            </ul>
-          </div>
+          <div class="provider-name">linkvertise</div>
+          <div class="provider-tag fast">2 checkpoint · ~3 min</div>
+          <p class="provider-desc">The quickest way to get your key — only a single checkpoint stands between you and full access. Works on mobile too.</p>
+          <ul class="provider-features">
+            <li><span class="feat-pos">+</span> Only 2 checkpoint to complete</li>
+            <li><span class="feat-pos">+</span> Takes around 5 minutes</li>
+            <li><span class="feat-pos">+</span> Works on mobile devices</li>
+            <li><span class="feat-pos">+</span> Most popular &amp; quickest option</li>
+          </ul>
+          <a class="get-key-btn locked-btn" id="btn-lv" href="#" onclick="return false;">join discord to unlock</a>
+          <div class="locked-hint" id="hint-lv">🔒 join discord first</div>
         </div>
-        <p class="hassle-price">one-time payment of <strong>$6.99</strong>, yours forever</p>
-        <a class="btn-primary" href="/premium" style="display:block;text-align:center;max-width:240px;margin:0 auto;">get premium</a>
+
+        <!-- LootLabs -->
+        <div class="provider-card locked" id="card-ll">
+          <div class="provider-badge gray">alternative</div>
+          <div class="provider-icon-wrap ll-bg">
+            <img class="provider-icon-img" src="https://i.tracxn.com/logo/company/lootlabs_gg_8b4fb07f-4591-439e-8ebb-72170df55c4f" alt="Loot Labs" onerror="this.style.opacity='0.3'" />
+          </div>
+          <div class="provider-name">loot labs</div>
+          <div class="provider-tag slow">3 checkpoints · ~9 min</div>
+          <p class="provider-desc">A bit longer than Linkvertise, but completing it supports Ajjan's Hub the most — ad revenue helps fund future scripts and updates.</p>
+          <ul class="provider-features">
+            <li><span class="feat-pos">+</span> 2 checkpoints to complete</li>
+            <li><span class="feat-pos">+</span> Takes around 9 minutes</li>
+            <li><span class="feat-pos">+</span> Helps fund the project most</li>
+            <li><span class="feat-pos">+</span> Always available as a backup</li>
+          </ul>
+          <a class="get-key-btn alt locked-btn" id="btn-ll" href="#" onclick="return false;">join discord to unlock</a>
+          <div class="locked-hint" id="hint-ll">🔒 join discord first</div>
+        </div>
+
+        <!-- Premium -->
+        <div class="provider-card premium-card" id="card-pm">
+          <div class="provider-badge gold">premium</div>
+          <div class="provider-icon-wrap pm-bg">
+            <span class="premium-icon">⭐</span>
+          </div>
+          <div class="provider-name">premium</div>
+          <div class="provider-tag instant">no checkpoints · instant</div>
+          <p class="provider-desc">Skip the key system entirely. One-time payment gives you a permanent, lifetime key with instant access — no checkpoints, ever again.</p>
+          <ul class="provider-features">
+            <li><span class="feat-pos">+</span> Zero checkpoints, ever</li>
+            <li><span class="feat-pos">+</span> Instant lifetime key issued</li>
+            <li><span class="feat-pos">+</span> Early access to new scripts</li>
+            <li><span class="feat-pos">+</span> Priority support in Discord</li>
+          </ul>
+          <a class="get-premium-btn" href="/premium">get premium — $6.99</a>
+        </div>
+
       </div>
+
+      <p class="key-notice" id="key-notice-free">free keys expire after 12 hours — you can generate a new one anytime from either provider.</p>
     </div>
+
   </section>
 </main>
 
 <footer>
   <div class="footer-logo">ajjan's hub</div>
   <div class="footer-links">
-    <a href="/">home</a><a href="/getkey">get key</a><a href="/games">games</a><a href="/premium">premium</a>
+    <a href="/">home</a>
+    <a href="/getkey">get key</a>
+    <a href="/games">games</a>
+    <a href="/premium">premium</a>
     <a href="https://discord.gg/2aVa3vkV3S" target="_blank">discord</a>
   </div>
   <p style="margin-top:0.5rem">not affiliated with Roblox Corporation. use scripts responsibly.</p>
@@ -257,29 +320,16 @@
 <div class="toast" id="toast"></div>
 
 <script>
-/* ─────────────────────────────────────────────
-   CONSTANTS
-───────────────────────────────────────────── */
-const LS_VERIFIED    = 'ajjan_verified';
-const LS_VERIFY_START = 'ajjan_verify_start';  // timestamp (ms) when user clicked join
-const LS_VERIFY_DONE  = 'ajjan_verify_done';   // '1' once complete
-
-// How long (ms) we assume the user needs to join Discord.
-// After this elapses the verification auto-completes when the tab is visible.
-const VERIFY_DURATION_MS = 8000;   // 8 s simulated "check" time
-// Timeout: give up if the user has been away for more than 10 minutes
+const LS_VERIFIED     = 'ajjan_verified';
+const LS_VERIFY_START = 'ajjan_verify_start';
+const LS_VERIFY_DONE  = 'ajjan_verify_done';
+const VERIFY_DURATION_MS = 8000;
 const VERIFY_TIMEOUT_MS  = 10 * 60 * 1000;
 
-/* ─────────────────────────────────────────────
-   STATE
-───────────────────────────────────────────── */
-let progressInterval = null;   // rAF / interval driving the bar while tab is active
-let pollInterval     = null;   // setInterval that fires when tab is hidden / returns
+let progressInterval = null;
+let pollInterval     = null;
 let isVerifying      = false;
 
-/* ─────────────────────────────────────────────
-   HELPERS
-───────────────────────────────────────────── */
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -298,9 +348,6 @@ function isTimedOut() {
   return start && (Date.now() - start) > VERIFY_TIMEOUT_MS;
 }
 
-/* ─────────────────────────────────────────────
-   PROGRESS BAR UI
-───────────────────────────────────────────── */
 function setProgress(pct) {
   const fill = document.getElementById('progress-fill');
   const label = document.getElementById('verify-pct');
@@ -308,9 +355,36 @@ function setProgress(pct) {
   if (label) label.textContent = Math.floor(pct) + '%';
 }
 
-/* ─────────────────────────────────────────────
-   COMPLETE VERIFICATION
-───────────────────────────────────────────── */
+/* Unlock provider cards after verification */
+function unlockProviders() {
+  var cardLv = document.getElementById('card-lv');
+  var cardLl = document.getElementById('card-ll');
+  var btnLv  = document.getElementById('btn-lv');
+  var btnLl  = document.getElementById('btn-ll');
+  var hintLv = document.getElementById('hint-lv');
+  var hintLl = document.getElementById('hint-ll');
+
+  if (cardLv) cardLv.classList.remove('locked');
+  if (cardLl) cardLl.classList.remove('locked');
+
+  if (btnLv) {
+    btnLv.classList.remove('locked-btn');
+    btnLv.href = 'https://ads.luarmor.net/get_key?for=Ajjan_key_system-QYxOdgnlCAzW';
+    btnLv.target = '_blank';
+    btnLv.onclick = null;
+    btnLv.textContent = 'get key';
+  }
+  if (btnLl) {
+    btnLl.classList.remove('locked-btn');
+    btnLl.href = 'https://ads.luarmor.net/get_key?for=ajjan_hub_lootlabs-hHxPaqwgzfzK';
+    btnLl.target = '_blank';
+    btnLl.onclick = null;
+    btnLl.textContent = 'get key';
+  }
+  if (hintLv) hintLv.style.display = 'none';
+  if (hintLl) hintLl.style.display = 'none';
+}
+
 function completeVerification() {
   clearInterval(progressInterval);
   clearInterval(pollInterval);
@@ -319,22 +393,18 @@ function completeVerification() {
   isVerifying = false;
 
   setProgress(100);
-
   localStorage.setItem(LS_VERIFIED, '1');
   localStorage.setItem(LS_VERIFY_DONE, '1');
   localStorage.removeItem(LS_VERIFY_START);
 
-  setTimeout(() => {
+  setTimeout(function() {
     document.getElementById('verify-loading').classList.remove('show');
     document.getElementById('verify-success').classList.add('show');
-    document.getElementById('key-providers-section').classList.add('show');
-    showToast('✅ discord verified!');
+    unlockProviders();
+    showToast('✅ discord verified — keys unlocked!');
   }, 400);
 }
 
-/* ─────────────────────────────────────────────
-   CANCEL VERIFICATION
-───────────────────────────────────────────── */
 function cancelVerify() {
   clearInterval(progressInterval);
   clearInterval(pollInterval);
@@ -352,167 +422,99 @@ function cancelVerify() {
   showToast('verification cancelled');
 }
 
-/* ─────────────────────────────────────────────
-   ACTIVE PROGRESS LOOP (tab is visible)
-   Drives the bar smoothly while the user watches.
-   Stops at ~95% to wait for the "poll" to confirm.
-───────────────────────────────────────────── */
 function startProgressLoop() {
   clearInterval(progressInterval);
-
-  progressInterval = setInterval(() => {
-    const frac = elapsedFraction();
-    // Ease the bar: grow quickly at first, taper near the end
-    const displayPct = Math.min(95, frac * 100);
-    setProgress(displayPct);
-
+  progressInterval = setInterval(function() {
+    var frac = elapsedFraction();
+    setProgress(Math.min(95, frac * 100));
     if (frac >= 1) {
-      // Time has fully elapsed → complete
       clearInterval(progressInterval);
       completeVerification();
     }
   }, 80);
 }
 
-/* ─────────────────────────────────────────────
-   BACKGROUND POLL (fires even when tab is hidden)
-   Uses setInterval which browsers keep running
-   (throttled to ~1 s when hidden, but that's fine).
-───────────────────────────────────────────── */
 function startBackgroundPoll() {
   clearInterval(pollInterval);
-
-  pollInterval = setInterval(() => {
-    // Another tab/window may have already finished
+  pollInterval = setInterval(function() {
     if (localStorage.getItem(LS_VERIFY_DONE) === '1') {
       clearInterval(pollInterval);
-      if (!localStorage.getItem(LS_VERIFIED)) return; // safety
       completeVerification();
       return;
     }
-
-    // Timed out?
     if (isTimedOut()) {
       clearInterval(pollInterval);
       cancelVerify();
       showToast('verification timed out — please try again');
-      return;
     }
   }, 3000);
 }
 
-/* ─────────────────────────────────────────────
-   TAB VISIBILITY HANDLER
-   When the user comes back after going to Discord,
-   we immediately re-check elapsed time and either
-   show the updated progress or complete instantly.
-───────────────────────────────────────────── */
 function handleVisibilityChange() {
   if (!isVerifying) return;
-
   if (document.hidden) {
-    // Tab going background — slow / stop the visual loop (battery friendly)
     clearInterval(progressInterval);
     progressInterval = null;
-
-    // Show "waiting" hint
     document.getElementById('verify-waiting').classList.add('show');
-    const statusText = document.getElementById('verify-status-text');
-    if (statusText) statusText.textContent = 'waiting for discord...';
+    var st = document.getElementById('verify-status-text');
+    if (st) st.textContent = 'waiting for discord...';
   } else {
-    // Tab came back into focus
     document.getElementById('verify-waiting').classList.remove('show');
-    const statusText = document.getElementById('verify-status-text');
-    if (statusText) statusText.textContent = 'verifying your discord membership...';
-
-    if (isTimedOut()) {
-      cancelVerify();
-      showToast('verification timed out — please try again');
-      return;
-    }
-
-    // Snap bar to current real elapsed progress
-    const frac = elapsedFraction();
+    var st2 = document.getElementById('verify-status-text');
+    if (st2) st2.textContent = 'verifying your discord membership...';
+    if (isTimedOut()) { cancelVerify(); showToast('verification timed out — please try again'); return; }
+    var frac = elapsedFraction();
     setProgress(Math.min(95, frac * 100));
-
-    if (frac >= 1) {
-      completeVerification();
-    } else {
-      // Resume the visual loop
-      startProgressLoop();
-    }
+    if (frac >= 1) { completeVerification(); } else { startProgressLoop(); }
   }
 }
 
-// Also catch window focus events (covers more mobile browsers)
 function handleWindowFocus() {
   if (!isVerifying || document.hidden) return;
   handleVisibilityChange();
 }
 
-/* ─────────────────────────────────────────────
-   START VERIFICATION  (called when user clicks "join discord")
-───────────────────────────────────────────── */
 function startVerify() {
   if (isVerifying) return;
-
-  // Record wall-clock start time so it survives tab switches
   localStorage.setItem(LS_VERIFY_START, Date.now().toString());
   localStorage.removeItem(LS_VERIFY_DONE);
-
   isVerifying = true;
-
-  // Show loading UI
   document.getElementById('discord-banner').classList.add('hidden');
   document.getElementById('verify-loading').classList.add('show');
   setProgress(0);
-
-  // Start both the visual loop and the background poll
   startProgressLoop();
   startBackgroundPoll();
 }
 
-/* ─────────────────────────────────────────────
-   PAGE INIT — resume if a verification was in
-   progress when the user last left the page.
-───────────────────────────────────────────── */
 (function initKeyPage() {
-  // Spawn particles
-  const c = document.getElementById('particles');
-  for (let i = 0; i < 20; i++) {
-    const p = document.createElement('div');
+  var c = document.getElementById('particles');
+  for (var i = 0; i < 20; i++) {
+    var p = document.createElement('div');
     p.className = 'particle';
-    const s = Math.random() * 4 + 2;
-    p.style.cssText = `width:${s}px;height:${s}px;left:${Math.random() * 100}%;--dur:${6 + Math.random() * 10}s;--delay:${Math.random() * 9}s;`;
+    var s = Math.random() * 4 + 2;
+    p.style.cssText = 'width:' + s + 'px;height:' + s + 'px;left:' + (Math.random() * 100) + '%;--dur:' + (6 + Math.random() * 10) + 's;--delay:' + (Math.random() * 9) + 's;';
     c.appendChild(p);
   }
 
-  // Already fully verified?
   if (localStorage.getItem(LS_VERIFIED) === '1') {
     document.getElementById('discord-banner').classList.add('hidden');
     document.getElementById('verify-success').classList.add('show');
-    document.getElementById('key-providers-section').classList.add('show');
+    unlockProviders();
     return;
   }
 
-  // Verification was started but not finished (user navigated away mid-flow)?
-  const savedStart = localStorage.getItem(LS_VERIFY_START);
+  var savedStart = localStorage.getItem(LS_VERIFY_START);
   if (savedStart) {
     if (isTimedOut()) {
-      // Expired — clean up silently
       localStorage.removeItem(LS_VERIFY_START);
       localStorage.removeItem(LS_VERIFY_DONE);
       return;
     }
-
-    // Restore the in-progress state
     isVerifying = true;
     document.getElementById('discord-banner').classList.add('hidden');
     document.getElementById('verify-loading').classList.add('show');
-
-    const frac = elapsedFraction();
+    var frac = elapsedFraction();
     setProgress(Math.min(95, frac * 100));
-
     if (frac >= 1) {
       completeVerification();
     } else {
@@ -523,15 +525,9 @@ function startVerify() {
   }
 })();
 
-/* ─────────────────────────────────────────────
-   EVENT LISTENERS
-───────────────────────────────────────────── */
 document.addEventListener('visibilitychange', handleVisibilityChange);
 window.addEventListener('focus', handleWindowFocus);
-// pagehide/pageshow handles back-forward cache (common on mobile)
-window.addEventListener('pageshow', (e) => {
-  if (e.persisted) handleWindowFocus();
-});
+window.addEventListener('pageshow', function(e) { if (e.persisted) handleWindowFocus(); });
 
 function toggleMenu() {
   document.getElementById('nav-links').classList.toggle('open');
