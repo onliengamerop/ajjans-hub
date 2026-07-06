@@ -15,6 +15,10 @@
     {
       "source": "/premium",
       "destination": "/premium.html"
+    },
+    {
+      "source": "/tos",
+      "destination": "/tos.html"
     }
   ]
 }
