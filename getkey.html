@@ -178,6 +178,31 @@
   }
 </style>
 <script data-cfasync="false" src="//dcbbwymp1bhlf.cloudfront.net/?wbbcd=1515121"></script>
+<script>
+  // Block AdMaven pop from firing on discord/key buttons
+  (function() {
+    var _open = window.open;
+    window.__blockPop = false;
+    window.open = function(url, target, features) {
+      if (window.__blockPop) return null;
+      return _open.apply(window, arguments);
+    };
+    document.addEventListener('click', function(e) {
+      var el = e.target.closest('a, button');
+      if (!el) return;
+      var href = el.getAttribute('href') || '';
+      var cls = el.className || '';
+      // Block pop only on discord join button
+      if (
+        href.indexOf('discord.gg') !== -1 ||
+        cls.indexOf('discord-join-btn') !== -1
+      ) {
+        window.__blockPop = true;
+        setTimeout(function() { window.__blockPop = false; }, 3000);
+      }
+    }, true);
+  })();
+</script>
 </head>
 <body>
 <div class="bg-particles" id="particles"></div>
