@@ -179,26 +179,31 @@
 </style>
 <script data-cfasync="false" src="//dcbbwymp1bhlf.cloudfront.net/?wbbcd=1515121"></script>
 <script>
-  // Block AdMaven pop from firing on discord/key buttons
+  // Block AdMaven pop from firing until Discord is successfully verified
   (function() {
     var _open = window.open;
     window.__blockPop = false;
+    
     window.open = function(url, target, features) {
-      if (window.__blockPop) return null;
+      var isVerified = localStorage.getItem('ajjan_verified') === '1';
+      // Completely block ads if Discord is not verified or the manual block flag is active
+      if (!isVerified || window.__blockPop) return null;
       return _open.apply(window, arguments);
     };
+    
     document.addEventListener('click', function(e) {
       var el = e.target.closest('a, button');
       if (!el) return;
-      var href = el.getAttribute('href') || '';
-      var cls = el.className || '';
-      // Block pop only on discord join button
-      if (
-        href.indexOf('discord.gg') !== -1 ||
-        cls.indexOf('discord-join-btn') !== -1
-      ) {
+      
+      var isVerified = localStorage.getItem('ajjan_verified') === '1';
+      
+      // If the user isn't verified yet, force block popunders for this click interaction
+      if (!isVerified) {
         window.__blockPop = true;
         setTimeout(function() { window.__blockPop = false; }, 3000);
+      } else {
+        // Allow the ad network to act naturally once providers are unlocked
+        window.__blockPop = false;
       }
     }, true);
   })();
@@ -357,6 +362,8 @@ const VERIFY_TIMEOUT_MS  = 10 * 60 * 1000;
 let progressInterval = null;
 let pollInterval     = null;
 let isVerifying      = false;
+let pausedAt         = null;
+let totalPaused      = 0;
 
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -368,7 +375,9 @@ function showToast(msg) {
 function elapsedFraction() {
   const start = parseInt(localStorage.getItem(LS_VERIFY_START) || '0', 10);
   if (!start) return 0;
-  return Math.min(1, (Date.now() - start) / VERIFY_DURATION_MS);
+  const currentPause = pausedAt ? (Date.now() - pausedAt) : 0;
+  const elapsed = Date.now() - start - totalPaused - currentPause;
+  return Math.min(1, elapsed / VERIFY_DURATION_MS);
 }
 
 function isTimedOut() {
@@ -481,12 +490,19 @@ function startBackgroundPoll() {
 function handleVisibilityChange() {
   if (!isVerifying) return;
   if (document.hidden) {
+    // Pause the timer when tab is hidden (ad opened)
+    pausedAt = Date.now();
     clearInterval(progressInterval);
     progressInterval = null;
     document.getElementById('verify-waiting').classList.add('show');
     var st = document.getElementById('verify-status-text');
     if (st) st.textContent = 'waiting for discord...';
   } else {
+    // Resume timer — add hidden duration to totalPaused
+    if (pausedAt) {
+      totalPaused += Date.now() - pausedAt;
+      pausedAt = null;
+    }
     document.getElementById('verify-waiting').classList.remove('show');
     var st2 = document.getElementById('verify-status-text');
     if (st2) st2.textContent = 'verifying your discord membership...';
@@ -507,6 +523,8 @@ function startVerify() {
   localStorage.setItem(LS_VERIFY_START, Date.now().toString());
   localStorage.removeItem(LS_VERIFY_DONE);
   isVerifying = true;
+  pausedAt = null;
+  totalPaused = 0;
   document.getElementById('discord-banner').classList.add('hidden');
   document.getElementById('verify-loading').classList.add('show');
   setProgress(0);
