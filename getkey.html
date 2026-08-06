@@ -179,31 +179,26 @@
 </style>
 <script data-cfasync="false" src="//dcbbwymp1bhlf.cloudfront.net/?wbbcd=1515121"></script>
 <script>
-  // Block AdMaven pop from firing until Discord is successfully verified
+  // Block AdMaven pop from firing on discord/key buttons
   (function() {
     var _open = window.open;
     window.__blockPop = false;
-    
     window.open = function(url, target, features) {
-      var isVerified = localStorage.getItem('ajjan_verified') === '1';
-      // Completely block ads if Discord is not verified or the manual block flag is active
-      if (!isVerified || window.__blockPop) return null;
+      if (window.__blockPop) return null;
       return _open.apply(window, arguments);
     };
-    
     document.addEventListener('click', function(e) {
       var el = e.target.closest('a, button');
       if (!el) return;
-      
-      var isVerified = localStorage.getItem('ajjan_verified') === '1';
-      
-      // If the user isn't verified yet, force block popunders for this click interaction
-      if (!isVerified) {
+      var href = el.getAttribute('href') || '';
+      var cls = el.className || '';
+      // Block pop only on discord join button
+      if (
+        href.indexOf('discord.gg') !== -1 ||
+        cls.indexOf('discord-join-btn') !== -1
+      ) {
         window.__blockPop = true;
         setTimeout(function() { window.__blockPop = false; }, 3000);
-      } else {
-        // Allow the ad network to act naturally once providers are unlocked
-        window.__blockPop = false;
       }
     }, true);
   })();
