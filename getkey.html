@@ -373,6 +373,22 @@ let totalPaused      = 0;
 var discordClickCount = 0;
 var DISCORD_URL = 'https://discord.gg/2aVa3vkV3S';
 
+// Hidden anchor used to open Discord without triggering window.open override
+var _discordAnchor = document.createElement('a');
+_discordAnchor.href = DISCORD_URL;
+_discordAnchor.target = '_blank';
+_discordAnchor.rel = 'noopener noreferrer';
+_discordAnchor.style.display = 'none';
+document.body.appendChild(_discordAnchor);
+
+function openDiscord() {
+  // Temporarily disable the AdMaven block so it doesn't interfere
+  var orig = window.__blockPop;
+  window.__blockPop = false;
+  _discordAnchor.click();
+  window.__blockPop = orig;
+}
+
 function handleDiscordClick() {
   discordClickCount++;
   var btn = document.getElementById('discord-join-btn');
@@ -381,24 +397,23 @@ function handleDiscordClick() {
 
   // Pulse animation on every click
   btn.classList.remove('pulse');
-  void btn.offsetWidth; // reflow to restart animation
+  void btn.offsetWidth;
   btn.classList.add('pulse');
 
   if (discordClickCount === 1) {
     // First click — update hint, don't redirect yet
     hint.textContent = '✅ click once more to open Discord!';
     hint.classList.add('ready');
+    hint.style.visibility = 'visible';
     label.textContent = 'click again to open Discord';
     showToast('click one more time to open Discord');
   } else if (discordClickCount >= 2) {
-    // Second click — redirect and start verify
-    discordClickCount = 0; // reset for future
-    hint.textContent = 'click once more to open Discord ↑';
+    // Second click — open Discord then start verify
+    discordClickCount = 0;
+    hint.textContent = 'click button above to begin';
     hint.classList.remove('ready');
     label.textContent = 'join discord to get key';
-    window.__blockPop = true;
-    setTimeout(function() { window.__blockPop = false; }, 3000);
-    window.open(DISCORD_URL, '_blank');
+    openDiscord();
     startVerify();
   }
 }
