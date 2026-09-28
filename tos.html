@@ -1,244 +1,1050 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Ajjans Terms of Service — please read before using or purchasing Ajjans keys and scripts." />
-<title>Terms of Service — Ajjans</title>
-<link rel="icon" type="image/png" href="https://i.ibb.co/fVKG21qT/image.png" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-<style>
-  :root {
-    --bg: #080005; --bg2: #0f0009; --bg3: #180010;
-    --accent: #d91a2a; --accent2: #ff3347; --accent3: #ff6677;
-    --accent-glow: rgba(217,26,42,0.14);
-    --text: #fff0f2; --muted: #a08088;
-    --border: rgba(217,26,42,0.25); --border2: rgba(255,255,255,0.07);
-    --mono: 'Space Mono', monospace; --sans: 'Outfit', sans-serif;
-    --radius: 12px; --radius-sm: 8px;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  * { -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; outline: none; }
-  .tos-body, .tos-body * { -webkit-user-select: text; user-select: text; }
-  ::selection { background: rgba(217,26,42,0.35); }
-  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.6; min-height: 100vh; overflow-x: hidden; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service — Ajjans Hub</title>
+  <meta name="description" content="The Terms of Service for Ajjans Hub, its loader, free keys and premium." />
+  <meta name="theme-color" content="#070305" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Terms of Service — Ajjans Hub" />
+  <meta property="og:description" content="The Terms of Service for Ajjans Hub, its loader, free keys and premium." />
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/favicon.png" />
 
-  .bg-particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-  .particle { position: absolute; border-radius: 50%; background: var(--accent); opacity: 0; animation: floatUp var(--dur, 9s) var(--delay, 0s) infinite ease-in; }
-  @keyframes floatUp { 0% { transform: translateY(105vh) scale(0); opacity: 0; } 10% { opacity: 0.18; } 90% { opacity: 0.05; } 100% { transform: translateY(-15vh) scale(1.3); opacity: 0; } }
+  <script>document.documentElement.classList.add("js");</script>
 
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 2rem; height: 64px;
-    background: rgba(8,0,5,0.88); backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border2); animation: slideDown 0.5s ease both;
-  }
-  @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  <!-- =========================================================
+       ADS (AdMaven) — delete this whole block to remove ads from this page
+       ========================================================= -->
+  <meta name="admaven-placement" content="BqHrEpdw5" />
+  <script>
+    /* Ad guard: stops the ad pop-up from hijacking clicks on Discord and store (Sellhub) links.
+       Exception: the FIRST click on the get-key "join discord" button is allowed
+       to show the ad — the second click opens Discord. */
+    (function () {
+      var realOpen = window.open;
+      var blocked = false;
+      window.open = function () { return blocked ? null : realOpen.apply(window, arguments); };
+      document.addEventListener("click", function (e) {
+        var el = e.target.closest ? e.target.closest("a, button") : null;
+        if (!el) return;
+        if (el.hasAttribute("data-gate-join") && el.getAttribute("data-armed") !== "1") return;
+        var href = el.getAttribute("href") || "";
+        if (href.indexOf("discord.gg") !== -1 || href.indexOf("sellhub.cx") !== -1) {
+          blocked = true;
+          setTimeout(function () { blocked = false; }, 3000);
+        }
+      }, true);
+    })();
+  </script>
+  <script data-cfasync="false" src="//dcbbwymp1bhlf.cloudfront.net/?wbbcd=1515121"></script>
 
-  .nav-logo { display: flex; align-items: center; text-decoration: none; transition: opacity 0.2s; }
-  .nav-logo:hover { opacity: 0.85; }
-  .nav-logo-img { height: 44px; width: auto; object-fit: contain; display: block; filter: drop-shadow(0 0 6px rgba(217,26,42,0.5)); transition: transform 0.25s, filter 0.25s; }
-  .nav-logo:hover .nav-logo-img { transform: scale(1.08); filter: drop-shadow(0 0 14px rgba(255,51,71,0.85)); }
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet" />
 
-  .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
-  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; position: relative; }
-  .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1px; background: var(--accent2); transform: scaleX(0); transition: transform 0.25s; }
-  .nav-links a:hover { color: var(--text); }
-  .nav-links a:hover::after { transform: scaleX(1); }
-  .nav-links a.active { color: var(--accent2); }
-  .nav-links a.active::after { transform: scaleX(1); }
-  .nav-cta { background: var(--accent) !important; color: #fff !important; padding: 0.4rem 1.1rem; border-radius: var(--radius-sm); font-weight: 600 !important; transition: background 0.2s, transform 0.15s !important; }
-  .nav-cta::after { display: none !important; }
-  .nav-cta:hover { background: var(--accent2) !important; transform: scale(1.05); }
+  <!-- =========================================================
+       STYLES (this page only)
+       ========================================================= -->
+  <style>
+    /* ==========================================================================
+       AJJANS HUB — Terms of Service page styles
+       Colours and sizes live in the :root variables right below.
+       ========================================================================== */
+    /* ==========================================================================
+       1. VARIABLES — edit colours / sizing here
+       ========================================================================== */
+    :root {
+      /* Palette */
+      --bg: #070305;               /* near-black base   */
+      --bg-2: #160408;             /* dark burgundy     */
+      --bg-3: #30070d;             /* deep crimson      */
+      --panel: rgba(24, 5, 10, 0.58);
+      --panel-strong: rgba(24, 6, 10, 0.94);
+      --red: #ef233c;              /* bright red        */
+      --red-bright: #ff2945;       /* hot red           */
+      --red-deep: #b50d24;
+      --border: rgba(170, 22, 42, 0.38);
+      --border-hot: rgba(255, 41, 69, 0.7);
+      --border-soft: rgba(255, 255, 255, 0.08);
+      --text: #f5eff1;             /* headings          */
+      --text-2: #e3d6da;
+      --muted: #b39aa1;            /* muted pink/grey   */
+      --faint: #7f6970;
+      --green: #2bd96b;
 
-  .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
-  .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: 0.3s; }
+      /* Type */
+      --font-sans: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+      --font-display: "Oswald", "Poppins", sans-serif;
 
-  main { padding-top: 64px; position: relative; z-index: 1; animation: fadeInPage 0.4s ease both; }
-  @keyframes fadeInPage { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+      /* Radii */
+      --r-sm: 10px;
+      --r-md: 14px;
+      --r-lg: 18px;
 
-  .tos-hero { padding: 4rem 1.5rem 2.5rem; text-align: center; position: relative; overflow: hidden; }
-  .tos-hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 65% 55% at 50% 20%, rgba(217,26,42,0.12) 0%, transparent 70%); pointer-events: none; }
-  .tos-hero-content { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
-  .tos-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(217,26,42,0.1); border: 1px solid var(--border); color: var(--accent2); font-size: 0.78rem; font-weight: 600; padding: 0.3rem 1rem; border-radius: 999px; margin-bottom: 1.25rem; letter-spacing: 0.05em; text-transform: uppercase; }
-  .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); animation: pulse 2s ease-in-out infinite; }
-  @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.6); opacity: 0.4; } }
-  .tos-hero h1 { font-family: var(--mono); font-size: clamp(2.2rem, 6vw, 3.4rem); font-weight: 700; line-height: 1.1; margin-bottom: 1rem; letter-spacing: -0.02em; }
-  .tos-hero h1 span { background: linear-gradient(135deg, #ff6677, #d91a2a, #ff3347); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .tos-hero p { font-size: 1.05rem; color: var(--muted); max-width: 520px; margin: 0 auto; }
+      /* Layout */
+      --container: 1400px;
+      --gutter: 32px;
+      --header-h: 84px;
+      /* left indent of the hero title block (0 on small screens, 104px on wide) */
+      --hero-indent: clamp(0px, calc((100vw - 1100px) * 0.26), 104px);
 
-  .tos-wrap { max-width: 820px; margin: 0 auto; padding: 0 1.5rem 5rem; position: relative; z-index: 1; }
-  .tos-body { display: flex; flex-direction: column; gap: 1.25rem; }
-  .tos-section { background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius); padding: 1.75rem 1.75rem; transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s; position: relative; overflow: hidden; }
-  .tos-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); transform: scaleX(0); transition: transform 0.4s; }
-  .tos-section:hover { border-color: var(--border); box-shadow: 0 8px 30px rgba(217,26,42,0.08); }
-  .tos-section:hover::before { transform: scaleX(1); }
-  .tos-section-head { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.9rem; }
-  .tos-num { flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; background: rgba(217,26,42,0.12); border: 1px solid var(--border); color: var(--accent2); font-family: var(--mono); font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; }
-  .tos-section h2 { font-size: 1.15rem; font-weight: 600; }
-  .tos-section ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; padding-left: 2.75rem; }
-  .tos-section ul li { position: relative; color: var(--muted); font-size: 0.94rem; line-height: 1.65; }
-  .tos-section ul li::before { content: '•'; position: absolute; left: -1.1rem; color: var(--accent2); }
-  .tos-section p.tos-plain { color: var(--muted); font-size: 0.94rem; line-height: 1.65; padding-left: 2.75rem; }
-
-  .tos-notice { background: linear-gradient(135deg, rgba(217,26,42,0.12), rgba(255,51,71,0.05)); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem 1.75rem; margin-top: 0.5rem; text-align: center; position: relative; overflow: hidden; }
-  .tos-notice::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 50% 50%, rgba(217,26,42,0.05) 0%, transparent 60%); animation: rotateSlow 15s linear infinite; }
-  @keyframes rotateSlow { to { transform: rotate(360deg); } }
-  .tos-notice h3 { position: relative; font-family: var(--mono); font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
-  .tos-notice p { position: relative; color: var(--muted); font-size: 0.92rem; line-height: 1.7; max-width: 560px; margin: 0 auto; }
-
-  .tos-updated { text-align: center; color: var(--muted); font-size: 0.82rem; margin-top: 2rem; font-family: var(--mono); }
-
-  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.5s, transform 0.5s; }
-  .reveal.visible { opacity: 1; transform: none; }
-
-  footer { border-top: 1px solid var(--border2); padding: 2rem 1.5rem; text-align: center; color: var(--muted); font-size: 0.85rem; position: relative; z-index: 1; }
-  footer .footer-logo { font-family: var(--mono); font-weight: 700; color: var(--accent2); font-size: 1rem; margin-bottom: 0.5rem; }
-  footer .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin: 0.75rem 0; flex-wrap: wrap; }
-  footer .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
-  footer .footer-links a:hover { color: var(--text); }
-
-  @media (max-width: 640px) {
-    .nav-links { display: none; }
-    .nav-links.open { display: flex; flex-direction: column; position: fixed; top: 64px; left: 0; right: 0; background: var(--bg); border-bottom: 1px solid var(--border2); padding: 1.5rem; gap: 1.25rem; z-index: 99; }
-    .hamburger { display: flex; }
-    .nav-logo-img { height: 36px; }
-    .tos-section { padding: 1.5rem 1.25rem; }
-    .tos-section ul, .tos-section p.tos-plain { padding-left: 0.25rem; }
-    .tos-section-head { margin-bottom: 0.75rem; }
-  }
-</style>
+      /* Effects */
+      --inner-hi: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    /* ==========================================================================
+       2. BASE / RESET
+       ========================================================================== */
+    *,
+    *::before,
+    *::after { box-sizing: border-box; }
+    html {
+      -webkit-text-size-adjust: 100%;
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(var(--header-h) + 16px);
+      scrollbar-color: #3a0b14 var(--bg);
+    }
+    body {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
+    }
+    main { flex: 1 0 auto; }
+    h1, h2, h3, p, ul, ol, figure, dl, dd { margin: 0; }
+    ul, ol { padding: 0; list-style: none; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button, input { font: inherit; color: inherit; }
+    button { cursor: pointer; }
+    :focus-visible {
+      outline: 2px solid var(--red-bright);
+      outline-offset: 3px;
+      border-radius: 6px;
+    }
+    ::selection { background: rgba(239, 35, 60, 0.45); color: #fff; }
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #3a0b14; border-radius: 6px; border: 2px solid var(--bg); }
+    ::-webkit-scrollbar-thumb:hover { background: #561222; }
+    .text-red { color: var(--red-bright); }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+    }
+    /* ==========================================================================
+       3. BACKGROUND LAYERS
+       .backdrop  = fixed page atmosphere (base, fog, grid, vignette)
+       .hero-fx   = hero-only lighting (glow, glass shards, light streaks)
+       ========================================================================== */
+    .backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      background:
+        radial-gradient(40% 36% at 8% 4%, rgba(120, 8, 24, 0.42), transparent 72%),
+        radial-gradient(46% 40% at 96% 12%, rgba(110, 8, 22, 0.32), transparent 72%),
+        radial-gradient(60% 40% at 50% 104%, rgba(80, 5, 16, 0.5), transparent 72%),
+        linear-gradient(180deg, #0b0306 0%, var(--bg) 50%, #080204 100%);
+    }
+    /* faint grid */
+    .backdrop::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 60, 80, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 60, 80, 0.05) 1px, transparent 1px);
+      background-size: 68px 68px;
+      background-position: center top;
+      -webkit-mask-image: radial-gradient(ellipse 80% 70% at 58% 22%, #000 20%, transparent 78%);
+              mask-image: radial-gradient(ellipse 80% 70% at 58% 22%, #000 20%, transparent 78%);
+    }
+    /* vignette */
+    .backdrop::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 95% 85% at 50% 40%, transparent 55%, rgba(0, 0, 0, 0.6) 100%);
+    }
+    /* ==========================================================================
+       4. SHARED
+       ========================================================================== */
+    .container {
+      width: min(var(--container), 100% - var(--gutter) * 2);
+      margin-inline: auto;
+    }
+    /* tinted glass surface used by most panels */
+    .glass {
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0) 40%),
+        linear-gradient(135deg, rgba(46, 7, 13, 0.6), rgba(13, 3, 6, 0.74));
+      border: 1px solid var(--border);
+      box-shadow: var(--inner-hi), 0 20px 44px -24px rgba(0, 0, 0, 0.95);
+      -webkit-backdrop-filter: blur(14px) saturate(130%);
+              backdrop-filter: blur(14px) saturate(130%);
+    }
+    .icon {
+      width: 1.1em;
+      height: 1.1em;
+      flex: none;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .icon--fill { fill: currentColor; stroke: none; }
+    /* red outlined icon square */
+    .icon-box {
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      flex: none;
+      border: 1px solid rgba(239, 35, 60, 0.42);
+      border-radius: var(--r-sm);
+      background: linear-gradient(180deg, rgba(70, 9, 20, 0.6), rgba(20, 4, 8, 0.6));
+      color: var(--red-bright);
+      box-shadow: var(--inner-hi), 0 0 18px -8px rgba(255, 41, 69, 0.6);
+    }
+    .icon-box .icon { width: 24px; height: 24px; }
+    /* ---- buttons ---- */
+    .btn {
+      --btn-h: 48px;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      height: var(--btn-h);
+      padding: 0 24px;
+      border: 1px solid transparent;
+      border-radius: var(--r-sm);
+      font-weight: 500;
+      font-size: 16px;
+      white-space: nowrap;
+      transition:
+        transform 0.25s var(--ease),
+        box-shadow 0.25s var(--ease),
+        background 0.25s var(--ease),
+        border-color 0.25s var(--ease),
+        color 0.25s var(--ease);
+    }
+    .btn .icon--arrow { transition: transform 0.25s var(--ease); }
+    .btn:hover .icon--arrow { transform: translateX(3px); }
+    .btn:active { transform: translateY(0) scale(0.985); }
+    .btn--primary {
+      color: #fff;
+      background: linear-gradient(180deg, #ff4058 0%, var(--red) 52%, #d1122c 100%);
+      border-color: rgba(255, 120, 135, 0.5);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.32),
+        inset 0 -2px 0 rgba(120, 0, 16, 0.35),
+        0 8px 22px -8px rgba(239, 35, 60, 0.8);
+    }
+    .btn--primary:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.36),
+        inset 0 -2px 0 rgba(120, 0, 16, 0.35),
+        0 0 0 1px rgba(255, 60, 80, 0.45),
+        0 12px 32px -8px rgba(255, 41, 69, 0.9);
+    }
+    .btn--glass {
+      color: var(--text);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.012));
+      border-color: rgba(255, 255, 255, 0.16);
+      box-shadow: var(--inner-hi);
+      -webkit-backdrop-filter: blur(10px);
+              backdrop-filter: blur(10px);
+    }
+    .btn--glass:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 60, 80, 0.6);
+      box-shadow: var(--inner-hi), 0 0 24px -6px rgba(239, 35, 60, 0.55);
+    }
+    .btn--ghost {
+      color: var(--text);
+      background: rgba(20, 4, 8, 0.6);
+      border-color: rgba(255, 255, 255, 0.13);
+    }
+    .btn--ghost .icon { color: var(--red-bright); }
+    .btn--ghost:hover { border-color: rgba(255, 60, 80, 0.6); box-shadow: 0 0 18px -6px rgba(239, 35, 60, 0.6); }
+    .btn--lg { --btn-h: 56px; font-size: 17px; padding: 0 30px; }
+    .btn--lg .icon { width: 20px; height: 20px; }
+    .btn--lg .icon--lead { width: 24px; height: 24px; }
+    .btn--sm { --btn-h: 40px; padding: 0 18px 0 22px; border-radius: 12px; font-size: 15px; }
+    .btn--xs { --btn-h: 34px; padding: 0 16px; gap: 8px; font-size: 13px; }
+    .btn--block { width: 100%; }
+    /* ---- section heads ---- */
+    .section { padding-block: clamp(64px, 8vw, 112px) 0; }
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--red-bright);
+    }
+    .kicker::before {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: currentColor;
+      box-shadow: 0 0 6px currentColor;
+    }
+    .h2 {
+      font-size: clamp(28px, 3vw, 42px);
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+    .lead {
+      margin-top: 12px;
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+    .section-intro { margin-bottom: 36px; }
+    .section-intro--center { text-align: center; }
+    .section-intro--center .lead { margin-inline: auto; }
+    /* ---- scroll reveal (only when JS is running) ---- */
+    .js .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+      transition-delay: var(--delay, 0s);
+    }
+    .js .reveal.is-in { opacity: 1; transform: none; }
+    /* ==========================================================================
+       5. NAVBAR
+       ========================================================================== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      padding-top: 12px;
+    }
+    .navbar {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      height: 62px;
+      padding: 0 14px 0 30px;
+      background: linear-gradient(180deg, rgba(26, 6, 11, 0.74), rgba(12, 3, 6, 0.74));
+      border: 1px solid rgba(160, 20, 38, 0.4);
+      border-radius: var(--r-lg);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 10px 30px -14px rgba(0, 0, 0, 0.8);
+      -webkit-backdrop-filter: blur(16px) saturate(140%);
+              backdrop-filter: blur(16px) saturate(140%);
+      transition: background 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+    }
+    /* thin red light along the top edge */
+    .navbar::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 12%;
+      right: 12%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 70, 90, 0.7), transparent);
+    }
+    .site-header.is-scrolled .navbar {
+      background: linear-gradient(180deg, rgba(22, 5, 9, 0.92), rgba(12, 3, 6, 0.92));
+      border-color: rgba(190, 24, 44, 0.45);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 16px 36px -12px rgba(0, 0, 0, 0.95);
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      flex: none;
+    }
+    .brand__icon {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 8px rgba(255, 41, 69, 0.35));
+      transition: transform 0.3s var(--ease);
+    }
+    .brand:hover .brand__icon { transform: rotate(-4deg) scale(1.04); }
+    .brand__text {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      color: var(--text);
+    }
+    .brand__accent { color: var(--red-bright); }
+    .nav-menu {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    /* links are centred on the bar, independent of logo / button widths */
+    .nav-links {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      gap: 42px;
+      transform: translateX(-50%);
+    }
+    .nav-links a {
+      position: relative;
+      display: block;
+      padding: 18px 2px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-2);
+      transition: color 0.2s var(--ease);
+    }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 10px;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--red-bright);
+      box-shadow: 0 0 10px rgba(255, 41, 69, 0.9);
+      transform: scaleX(0);
+      transition: transform 0.25s var(--ease);
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a:hover::after { transform: scaleX(0.5); }
+    .nav-links a[aria-current="page"] { color: var(--red-bright); }
+    .nav-links a[aria-current="page"]::after { transform: scaleX(1); }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .nav-toggle {
+      display: none;
+      margin-left: auto;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      background: rgba(255, 255, 255, 0.03);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--text);
+      transition: transform 0.25s var(--ease), opacity 0.2s;
+    }
+    .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    /* ==========================================================================
+       8. GAME CARDS
+       ========================================================================== */
+    .games { padding-top: 6px; }
+    /* ==========================================================================
+       13. FOOTER
+       ========================================================================== */
+    .site-footer {
+      margin-top: clamp(72px, 9vw, 120px);
+      border-top: 1px solid rgba(160, 20, 38, 0.3);
+      background: linear-gradient(180deg, rgba(20, 4, 8, 0.6), rgba(7, 3, 5, 0.9));
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
+      gap: 40px;
+      padding: 56px 0 40px;
+    }
+    .footer-brand p {
+      margin-top: 16px;
+      max-width: 320px;
+      color: var(--muted);
+      font-size: 14.5px;
+    }
+    .footer-brand .btn { margin-top: 20px; }
+    .footer-col h3 {
+      margin-bottom: 14px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--red-bright);
+    }
+    .footer-col ul { display: grid; gap: 10px; }
+    .footer-col a {
+      font-size: 14.5px;
+      color: var(--text-2);
+      opacity: 0.85;
+      transition: color 0.2s var(--ease), opacity 0.2s var(--ease);
+    }
+    .footer-col a:hover { color: #fff; opacity: 1; }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px 24px;
+      flex-wrap: wrap;
+      padding: 20px 0 28px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 13px;
+      color: var(--faint);
+    }
+    /* ==========================================================================
+       14. INNER PAGES
+       ========================================================================== */
+    .page-hero {
+      position: relative;
+      isolation: isolate;
+      padding: clamp(48px, 7vw, 96px) 0 clamp(32px, 4vw, 48px);
+      text-align: center;
+    }
+    .page-hero .h1 {
+      font-size: clamp(40px, 5vw, 72px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+    .page-hero .lead { margin-inline: auto; font-size: 17px; }
+    .page-hero .kicker::after {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: currentColor;
+      box-shadow: 0 0 6px currentColor;
+    }
+    /* page-level glow behind inner page heroes */
+    .page-glow {
+      position: absolute;
+      left: 50%;
+      top: -40%;
+      z-index: -1;
+      width: min(900px, 90vw);
+      height: 520px;
+      transform: translateX(-50%);
+      background: radial-gradient(closest-side, rgba(220, 18, 45, 0.35), transparent);
+      filter: blur(20px);
+      pointer-events: none;
+    }
+    /* ==========================================================================
+       16. ANIMATIONS
+       ========================================================================== */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+          animation: none !important;
+          transition-duration: 0.01ms !important;
+        }
+      .js .reveal { opacity: 1; transform: none; }
+    }
+    /* ==========================================================================
+       17. RESPONSIVE
+       ========================================================================== */
+    /* Laptops */
+    @media (max-width: 1439px) {
+      .nav-links { gap: 32px; }
+      .footer-grid { grid-template-columns: minmax(0, 1.2fr) repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 1180px) {
+      :root { --gutter: 24px; }
+      .nav-links { gap: 24px; }
+    }
+    /* Tablets — collapse navbar, single-column hero */
+    @media (max-width: 960px) {
+      :root { --header-h: 78px; }
+      .navbar { padding: 0 12px 0 18px; }
+      .nav-toggle { display: inline-flex; }
+      .nav-menu {
+          position: absolute;
+          top: calc(100% + 8px);
+          left: 0;
+          right: 0;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 14px;
+          padding: 14px;
+          background: rgba(16, 4, 7, 0.97);
+          border: 1px solid rgba(160, 20, 38, 0.45);
+          border-radius: var(--r-md);
+          box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.9);
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(-6px);
+          transition: opacity 0.2s var(--ease), transform 0.2s var(--ease), visibility 0.2s;
+        }
+      .nav-menu.is-open { opacity: 1; visibility: visible; transform: none; }
+      .nav-links {
+          position: static;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 2px;
+          transform: none;
+        }
+      .nav-links a { padding: 12px; border-radius: 8px; }
+      .nav-links a::after { display: none; }
+      .nav-links a:hover { background: rgba(255, 255, 255, 0.04); }
+      .nav-links a[aria-current="page"] { background: rgba(239, 35, 60, 0.1); }
+      .nav-actions { padding: 12px 4px 2px; border-top: 1px solid var(--border-soft); }
+      .nav-actions .btn { width: 100%; }
+      .footer-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+    /* Phones */
+    @media (max-width: 640px) {
+      :root { --gutter: 16px; --header-h: 72px; }
+      .site-header { padding-top: 10px; }
+      .navbar { height: 56px; border-radius: 14px; }
+      .brand__icon { width: 38px; height: 38px; }
+      .brand__text { font-size: 21px; }
+      .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 20px; padding-top: 44px; }
+      .footer-bottom { flex-direction: column; }
+    }
+    /* Touch devices: drop heavy blur for smooth scrolling */
+    @media (pointer: coarse) {
+      .glass, .navbar, .btn--glass, .loader-card, .game-card__status {
+          -webkit-backdrop-filter: none;
+                  backdrop-filter: none;
+        }
+      .navbar { background: rgba(16, 4, 7, 0.94); }
+    }
+    /* ==========================================================================
+       LEGAL PAGE (terms of service)
+       ========================================================================== */
+    .legal {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      gap: 32px;
+      align-items: start;
+      max-width: 1120px;
+      margin-inline: auto;
+    }
+    .legal__toc {
+      position: sticky;
+      top: calc(var(--header-h) + 20px);
+      padding: 22px;
+      border-radius: var(--r-md);
+    }
+    .legal__toc h2 {
+      margin-bottom: 14px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--red-bright);
+    }
+    .legal__toc ol { display: grid; gap: 4px; counter-reset: toc; }
+    .legal__toc a {
+      display: flex;
+      gap: 10px;
+      padding: 6px 8px;
+      border-radius: 8px;
+      font-size: 14px;
+      color: var(--muted);
+      transition: color 0.2s var(--ease), background 0.2s var(--ease);
+    }
+    .legal__toc a::before {
+      counter-increment: toc;
+      content: counter(toc, decimal-leading-zero);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--faint);
+      padding-top: 2px;
+    }
+    .legal__toc a:hover { color: var(--text); background: rgba(239, 35, 60, 0.08); }
+    .legal__body {
+      padding: clamp(24px, 4vw, 48px);
+      border-radius: var(--r-lg);
+    }
+    .legal__summary {
+      margin-bottom: 36px;
+      padding: 20px 22px;
+      border-radius: var(--r-md);
+      border: 1px solid rgba(239, 35, 60, 0.45);
+      background: linear-gradient(135deg, rgba(239, 35, 60, 0.12), rgba(239, 35, 60, 0.02));
+    }
+    .legal__summary h2 { font-size: 16px; font-weight: 600; color: var(--text); }
+    .legal__summary ul { margin-top: 10px; }
+    .legal__section { counter-increment: legal; }
+    .legal__section + .legal__section {
+      margin-top: 32px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border-soft);
+    }
+    .legal__section h2 {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .legal__section h2::before {
+      content: counter(legal, decimal-leading-zero);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--red-bright);
+    }
+    .legal__body { counter-reset: legal; }
+    .legal__body p,
+    .legal__body li {
+      color: var(--muted);
+      font-size: 15.5px;
+      line-height: 1.75;
+    }
+    .legal__body p { margin-top: 12px; }
+    .legal__body strong { color: var(--text-2); font-weight: 600; }
+    .legal__body a { color: var(--red-bright); }
+    .legal__body a:hover { text-decoration: underline; }
+    .legal__body ul { display: grid; gap: 8px; margin-top: 12px; }
+    .legal__body li { position: relative; padding-left: 20px; }
+    .legal__body li::before {
+      content: "";
+      position: absolute;
+      left: 2px;
+      top: 0.72em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--red-bright);
+      box-shadow: 0 0 6px rgba(255, 41, 69, 0.7);
+    }
+    @media (max-width: 960px) {
+      .legal { grid-template-columns: 1fr; }
+      .legal__toc { display: none; }
+    }
+    /* anything with the hidden attribute stays hidden, even flex/grid elements */
+    [hidden] { display: none !important; }
+    .section--tight { padding-top: clamp(40px, 5vw, 64px); }
+    /* ==========================================================================
+       COPY BUTTON ANIMATIONS
+       ========================================================================== */
+    /* label slides up when it changes (copy -> copied! -> copy) */
+    [data-copy-label] { display: inline-block; }
+    [data-copy-label].is-swapping { animation: label-swap 0.35s var(--ease-out); }
+    @keyframes label-swap {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: none; }
+    }
+  </style>
 </head>
 <body>
-<div class="bg-particles" id="particles"></div>
 
-<nav>
-  <a class="nav-logo" href="/" title="Ajjans Hub">
-    <img class="nav-logo-img" src="https://i.ibb.co/fVKG21qT/image.png" alt="Ajjans Hub" onerror="this.style.display='none'" />
-  </a>
-  <ul class="nav-links" id="nav-links">
-    <li><a href="/">home</a></li>
-    <li><a href="/getkey">get key</a></li>
-    <li><a href="/games">games</a></li>
-    <li><a href="/premium">premium</a></li>
-    <li><a href="https://discord.gg/2aVa3vkV3S" target="_blank" class="nav-cta">discord</a></li>
-  </ul>
-  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
+  <!-- =========================================================
+       ICON SPRITE — use with <svg class="icon"><use href="#i-name"/></svg>
+       ========================================================= -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" /></symbol>
+    <symbol id="i-discord" viewBox="0 0 127.14 96.36"><path d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0a105.89 105.89 0 0 0-26.25 8.09C2.79 32.65-1.71 56.6.54 80.21a105.73 105.73 0 0 0 32.17 16.15 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.19-16.14c2.64-27.38-4.51-51.11-18.9-72.15zM42.45 65.69C36.18 65.69 31 60 31 53s5-12.74 11.43-12.74S54 46 53.89 53s-5.05 12.69-11.44 12.69zm42.24 0C78.41 65.69 73.25 60 73.25 53s5-12.74 11.44-12.74S96.23 46 96.12 53s-5.04 12.69-11.43 12.69z" /></symbol>
+  </svg>
 
-<main>
-  <div class="tos-hero">
-    <div class="tos-hero-bg"></div>
-    <div class="tos-hero-content">
-      <div class="tos-badge"><span class="badge-dot"></span> please read carefully</div>
-      <h1>terms of <span>service</span></h1>
-      <p>By accessing or using any Ajjans service, key, or script, you agree to be bound by the terms below.</p>
+  <!-- =========================================================
+       PAGE ATMOSPHERE (fixed, decorative)
+       ========================================================= -->
+  <div class="backdrop" aria-hidden="true"></div>
+
+  <!-- =========================================================
+       NAVBAR
+       ========================================================= -->
+  <header class="site-header">
+    <nav class="navbar container" aria-label="Main">
+      <a class="brand" href="/" aria-label="Ajjans home">
+        <img class="brand__icon" src="assets/logo.png" width="44" height="44" alt="" />
+        <span class="brand__text"><span class="brand__accent">AJJ</span>ANS</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="nav-menu" id="nav-menu">
+        <ul class="nav-links">
+          <li><a href="/">home</a></li>
+          <li><a href="/getkey">get key</a></li>
+          <li><a href="/games">games</a></li>
+          <li><a href="/premium">premium</a></li>
+          <li><a href="https://discord.gg/2aVa3vkV3S" target="_blank" rel="noopener">discord</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a class="btn btn--primary btn--sm" href="/getkey">
+            get started
+            <svg class="icon icon--arrow" aria-hidden="true"><use href="#i-arrow" /></svg>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- =========================================================
+         PAGE HERO
+         ========================================================= -->
+    <section class="page-hero container" aria-labelledby="page-title">
+      <span class="page-glow" aria-hidden="true"></span>
+      <p class="kicker">legal</p>
+      <h1 class="h1" id="page-title">Terms of <span class="text-red">Service</span></h1>
+      <p class="lead">Last updated: September 28, 2026</p>
+    </section>
+
+    <!-- =========================================================
+         TERMS
+         ========================================================= -->
+    <div class="container legal">
+      <nav class="legal__toc glass" aria-label="On this page">
+        <h2>On this page</h2>
+        <ol>
+              <li><a href="#acceptance">Accepting these terms</a></li>
+              <li><a href="#about">What Ajjans Hub is</a></li>
+              <li><a href="#risk">Use at your own risk</a></li>
+              <li><a href="#keys">Free keys</a></li>
+              <li><a href="#premium">Premium</a></li>
+              <li><a href="#refunds">Refunds</a></li>
+              <li><a href="#acceptable-use">What you can&#x27;t do</a></li>
+              <li><a href="#termination">Losing access</a></li>
+              <li><a href="#availability">Updates and availability</a></li>
+              <li><a href="#warranty">No warranty</a></li>
+              <li><a href="#liability">Limitation of liability</a></li>
+              <li><a href="#third-party">Third-party services</a></li>
+              <li><a href="#changes">Changes to these terms</a></li>
+              <li><a href="#contact">Contact</a></li>
+        </ol>
+      </nav>
+
+      <article class="legal__body glass">
+        <div class="legal__summary">
+          <h2>The short version</h2>
+          <ul>
+            <li>Ajjans Hub isn't affiliated with Roblox. Using scripts is at your own risk.</li>
+            <li>Keys and premium are for you only — don't share, sell or leak them.</li>
+            <li>Premium is a one-time purchase and all sales are final — no refunds.</li>
+            <li>We can remove access if these rules are broken.</li>
+          </ul>
+        </div>
+
+        <section class="legal__section" id="acceptance" aria-labelledby="acceptance-title">
+          <h2 id="acceptance-title">Accepting these terms</h2>
+          <p>By visiting this website, using the Ajjans loader or any Ajjans script, getting a key, or buying premium, you agree to these Terms of Service. If you don't agree, please don't use Ajjans Hub.</p>
+        </section>
+        <section class="legal__section" id="about" aria-labelledby="about-title">
+          <h2 id="about-title">What Ajjans Hub is</h2>
+          <p>Ajjans Hub is a free, community-run collection of Roblox scripts. It is <strong>not affiliated with, endorsed by, or connected to Roblox Corporation</strong> or any game developer whose games we support.</p>
+          <p>Scripts run through third-party executors that we don't make or control. Using scripts may break the Roblox Terms of Use and the rules of individual games.</p>
+        </section>
+        <section class="legal__section" id="risk" aria-labelledby="risk-title">
+          <h2 id="risk-title">Use at your own risk</h2>
+          <ul>
+            <li>You are responsible for your own Roblox account and anything that happens to it.</li>
+            <li>We work hard to keep scripts safe and undetected, but <strong>no script is 100% risk-free</strong>. Accounts can be warned, banned or reset by Roblox or a game's developers.</li>
+            <li>We are not responsible for bans, lost items, lost progress, or any other account action.</li>
+          </ul>
+        </section>
+        <section class="legal__section" id="keys" aria-labelledby="keys-title">
+          <h2 id="keys-title">Free keys</h2>
+          <ul>
+            <li>Free keys are handed out through third-party providers such as Linkvertise and Loot Labs. Their own terms and privacy policies apply while you use them.</li>
+            <li>Free keys expire after 15 hours. You can generate a new one at any time.</li>
+            <li>Keys are for personal use. Don't sell, share or publish them.</li>
+          </ul>
+        </section>
+        <section class="legal__section" id="premium" aria-labelledby="premium-title">
+          <h2 id="premium-title">Premium</h2>
+          <ul>
+            <li>Premium is a one-time payment that removes the key system and unlocks premium perks.</li>
+            <li>"Lifetime" means for as long as Ajjans Hub keeps running — it is not a promise that the service will exist forever.</li>
+            <li>Premium is for one person. Sharing, reselling or giving away premium access isn't allowed.</li>
+            <li>Purchases are processed through our Sellhub store. If something goes wrong with your order, open a ticket in our Discord and we'll sort it out with you.</li>
+            <li>If you are under 18, get permission from a parent or guardian before buying.</li>
+          </ul>
+        </section>
+        <section class="legal__section" id="refunds" aria-labelledby="refunds-title">
+          <h2 id="refunds-title">Refunds</h2>
+          <p>Premium is a digital product that's delivered straight away, so <strong>all sales are final and we don't give refunds</strong> — including if you change your mind, stop using Ajjans Hub, or a script stops working after a Roblox or game update.</p>
+          <p>We'll always make it right if:</p>
+          <ul>
+            <li>You paid but never received your premium key.</li>
+            <li>You were charged more than once for the same order.</li>
+          </ul>
+          <p>In those cases, open a ticket in our Discord with your order details and we'll deliver your key or sort out the duplicate charge.</p>
+          <p>Filing a chargeback or payment dispute instead of contacting us will remove your premium access. Nothing in these terms takes away any rights you have under the consumer laws where you live.</p>
+        </section>
+        <section class="legal__section" id="acceptable-use" aria-labelledby="acceptable-use-title">
+          <h2 id="acceptable-use-title">What you can&#x27;t do</h2>
+          <ul>
+            <li>Resell, re-upload, leak or claim our scripts as your own.</li>
+            <li>Crack, bypass or tamper with the key system or the loader.</li>
+            <li>Attack, spam or overload the website, the loader or our Discord.</li>
+            <li>File a chargeback or payment dispute to get premium for free.</li>
+            <li>Use Ajjans Hub to harass other players.</li>
+          </ul>
+        </section>
+        <section class="legal__section" id="termination" aria-labelledby="termination-title">
+          <h2 id="termination-title">Losing access</h2>
+          <p>If you break these terms we may revoke your key or premium access, or remove you from our Discord, without a refund.</p>
+        </section>
+        <section class="legal__section" id="availability" aria-labelledby="availability-title">
+          <h2 id="availability-title">Updates and availability</h2>
+          <p>Roblox and game updates can break scripts at any time. We fix things as fast as we can, but we don't guarantee that every script, feature or game will always work, or that the website and loader will always be online. Features and supported games can change or be removed.</p>
+        </section>
+        <section class="legal__section" id="warranty" aria-labelledby="warranty-title">
+          <h2 id="warranty-title">No warranty</h2>
+          <p>Ajjans Hub is provided <strong>"as is"</strong> and <strong>"as available"</strong>, without warranties of any kind, whether express or implied.</p>
+        </section>
+        <section class="legal__section" id="liability" aria-labelledby="liability-title">
+          <h2 id="liability-title">Limitation of liability</h2>
+          <p>To the fullest extent allowed by law, Ajjans Hub and its team are not liable for any indirect, incidental or consequential damages, or for any loss of accounts, items or data, that come from using — or not being able to use — the website, loader or scripts.</p>
+        </section>
+        <section class="legal__section" id="third-party" aria-labelledby="third-party-title">
+          <h2 id="third-party-title">Third-party services</h2>
+          <p>We rely on services run by others, including Discord, Luarmor, Linkvertise, Loot Labs, Sellhub, script executors and advertising networks such as AdMaven. We don't control them and aren't responsible for their content, availability or how they handle your data.</p>
+          <p>This website shows ads. They help keep Ajjans Hub free.</p>
+        </section>
+        <section class="legal__section" id="changes" aria-labelledby="changes-title">
+          <h2 id="changes-title">Changes to these terms</h2>
+          <p>We may update these terms from time to time. The date at the top of this page shows when they last changed. Continuing to use Ajjans Hub after a change means you accept the new terms.</p>
+        </section>
+        <section class="legal__section" id="contact" aria-labelledby="contact-title">
+          <h2 id="contact-title">Contact</h2>
+          <p>Questions about these terms? Ask in our <a href="https://discord.gg/2aVa3vkV3S" target="_blank" rel="noopener">Discord server</a>.</p>
+        </section>
+      </article>
     </div>
-  </div>
+  </main>
 
-  <div class="tos-wrap">
-    <div class="tos-body">
-
-      <div class="tos-section reveal">
-        <div class="tos-section-head"><div class="tos-num">1</div><h2>license usage &amp; restrictions</h2></div>
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="/" aria-label="Ajjans home">
+          <img class="brand__icon" src="assets/logo.png" width="44" height="44" alt="" loading="lazy" />
+          <span class="brand__text"><span class="brand__accent">AJJ</span>ANS</span>
+        </a>
+        <p>Free, fast and always-updated scripts for the Roblox games you actually play.</p>
+        <a class="btn btn--ghost btn--xs" href="https://discord.gg/2aVa3vkV3S" target="_blank" rel="noopener">
+          <svg class="icon icon--fill" aria-hidden="true"><use href="#i-discord" /></svg>
+          join discord
+        </a>
+      </div>
+      <nav class="footer-col" aria-label="Site">
+        <h3>Site</h3>
         <ul>
-          <li>Every key or license is issued to a single person — access is not meant to be shared with anyone else.</li>
-          <li>Reselling, gifting, trading, or otherwise passing along a license to another user is not allowed.</li>
-          <li>If we notice a license being shared or accessed by multiple people, we can shut it down immediately.</li>
-          <li>Keys may be revoked at any time if we detect misuse, abuse, or suspicious activity tied to them.</li>
+          <li><a href="/">Home</a></li>
+          <li><a href="/games">Games</a></li>
+          <li><a href="/premium">Premium</a></li>
+          <li><a href="/tos">Terms of Service</a></li>
         </ul>
-      </div>
-
-      <div class="tos-section reveal">
-        <div class="tos-section-head"><div class="tos-num">2</div><h2>payments</h2></div>
+      </nav>
+      <nav class="footer-col" aria-label="Get started">
+        <h3>Get started</h3>
         <ul>
-          <li>Sending the wrong amount — too much or too little — will not be refunded or made up for on our end.</li>
-          <li>Double check the amount and details before sending; it's on you to get it right.</li>
-          <li>We're not responsible for money lost to mistyped addresses, failed transactions, or network delays.</li>
+          <li><a href="/getkey">Get a free key</a></li>
+          <li><a href="/premium">Go premium</a></li>
+          <li><a href="/#faq">FAQ</a></li>
         </ul>
-      </div>
-
-      <div class="tos-section reveal">
-        <div class="tos-section-head"><div class="tos-num">3</div><h2>refund policy</h2></div>
+      </nav>
+      <nav class="footer-col" aria-label="Community">
+        <h3>Community</h3>
         <ul>
-          <li>All purchases are final. We do not offer refunds once a payment goes through.</li>
-          <li>This covers every situation — changed your mind, script didn't fit your executor, you weren't active enough, or you're just unhappy with how it performed.</li>
+          <li><a href="https://discord.gg/2aVa3vkV3S" target="_blank" rel="noopener">Discord</a></li>
+          <li><a href="https://discord.gg/2aVa3vkV3S" target="_blank" rel="noopener">Request a game</a></li>
+          <li><a href="https://discord.gg/2aVa3vkV3S" target="_blank" rel="noopener">Get support</a></li>
         </ul>
-      </div>
-
-      <div class="tos-section reveal">
-        <div class="tos-section-head"><div class="tos-num">4</div><h2>ending a license</h2></div>
-        <ul>
-          <li>We can pause or fully cancel any license whenever we decide to, with or without giving a heads up first.</li>
-          <li>This usually happens because of a terms violation, abusing the service, or breaking rules set by a third party we rely on.</li>
-        </ul>
-      </div>
-
-      <div class="tos-section reveal">
-        <div class="tos-section-head"><div class="tos-num">5</div><h2>disclaimer</h2></div>
-        <ul>
-          <li>Everything we offer is provided as-is, with no promises attached.</li>
-          <li>We can't guarantee the scripts will always be online, always available, or always come with support.</li>
-        </ul>
-      </div>
-
-      <div class="tos-section reveal">
-        <div class="tos-section-head"><div class="tos-num">6</div><h2>getting a key</h2></div>
-        <ul>
-          <li>We sometimes offer other ways to grab a key outside the main system — check our Discord for those.</li>
-          <li>Trying to skip or trick the key system is not allowed.</li>
-          <li>You need to actually finish whatever step is required to earn a key — half-finishing it or trying to fake completion won't unlock access.</li>
-        </ul>
-      </div>
-
-      <div class="tos-section reveal">
-        <div class="tos-section-head"><div class="tos-num">7</div><h2>changes to these terms</h2></div>
-        <p class="tos-plain">We can update these terms whenever we need to, and we won't always announce it beforehand. If you keep using Ajjans after a change, that means you're okay with the new version.</p>
-      </div>
-
-      <div class="tos-notice reveal">
-        <h3>important notice</h3>
-        <p>Using or purchasing an Ajjans key means you've read, understood, and agreed to everything above. If any part of this doesn't sit right with you, please don't use or purchase our products.</p>
-      </div>
-
-      <div class="tos-updated">© 2026 Ajjans. All Rights Reserved.</div>
+      </nav>
     </div>
-  </div>
-</main>
+    <div class="container footer-bottom">
+      <p>© <span data-year>2026</span> Ajjans Hub. Love using Ajjans :)</p>
+      <p>Not affiliated with Roblox Corporation. Use scripts responsibly. <a href="/tos">Terms of Service</a></p>
+    </div>
+  </footer>
 
-<footer>
-  <div class="footer-logo">Ajjans</div>
-  <div class="footer-links">
-    <a href="/">home</a>
-    <a href="/getkey">get key</a>
-    <a href="/games">games</a>
-    <a href="/premium">premium</a>
-    <a href="/tos">terms of service</a>
-    <a href="https://discord.gg/2aVa3vkV3S" target="_blank">discord</a>
-  </div>
-  <p style="margin-top:0.5rem">hope you enjoy! we love ajjans</p>
-</footer>
+  <!-- =========================================================
+       SCRIPT (this page only)
+       ========================================================= -->
+  <script>
+    (function () {
+      "use strict";
 
-<script>
-(function(){
-  const c = document.getElementById('particles');
-  for(let i = 0; i < 20; i++){
-    const p = document.createElement('div');
-    p.className = 'particle';
-    const s = Math.random()*4+2;
-    p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;--dur:${6+Math.random()*10}s;--delay:${Math.random()*9}s;`;
-    c.appendChild(p);
-  }
-})();
-function toggleMenu(){ document.getElementById('nav-links').classList.toggle('open'); }
-(function observeReveal(){
-  const obs = new IntersectionObserver((entries)=>{ entries.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*60); obs.unobserve(e.target); } }); },{threshold:0.06});
-  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-})();
-</script>
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      /* ---------- Navigation (mobile menu + scrolled header) ---------- */
+      const header = document.querySelector(".site-header");
+      const toggle = document.querySelector(".nav-toggle");
+      const menu = document.getElementById("nav-menu");
+
+      function setMenu(open) {
+        if (!toggle || !menu) return;
+        toggle.setAttribute("aria-expanded", String(open));
+        toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        menu.classList.toggle("is-open", open);
+      }
+
+      if (toggle && menu) {
+        toggle.addEventListener("click", () => setMenu(toggle.getAttribute("aria-expanded") !== "true"));
+        menu.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setMenu(false)));
+        document.addEventListener("keydown", (e) => { if (e.key === "Escape") setMenu(false); });
+        document.addEventListener("click", (e) => {
+          if (!menu.contains(e.target) && !toggle.contains(e.target)) setMenu(false);
+        });
+        window.matchMedia("(min-width: 961px)").addEventListener("change", (e) => { if (e.matches) setMenu(false); });
+      }
+
+      if (header) {
+        const onScroll = () => header.classList.toggle("is-scrolled", window.scrollY > 16);
+        onScroll();
+        window.addEventListener("scroll", onScroll, { passive: true });
+      }
+
+      /* ---------- Scroll reveal ---------- */
+      const revealEls = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window && !reduceMotion) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-in");
+            io.unobserve(entry.target);
+          });
+        }, { threshold: 0, rootMargin: "0px 0px -6% 0px" });
+        revealEls.forEach((el) => io.observe(el));
+      } else {
+        revealEls.forEach((el) => el.classList.add("is-in"));
+      }
+
+      /* ---------- Footer year ---------- */
+      document.querySelectorAll("[data-year]").forEach((el) => { el.textContent = String(new Date().getFullYear()); });
+    })();
+  </script>
 </body>
 </html>
