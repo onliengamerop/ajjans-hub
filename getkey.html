@@ -1064,6 +1064,8 @@
       .gate.just-joined .gate__icon-check { stroke-dashoffset: 0; }
     }
   </style>
+  <link rel="stylesheet" href="/assets/key-system.css" />
+  <script src="/assets/key-system.js" defer></script>
 </head>
 <body>
 
@@ -1136,7 +1138,7 @@
          STEP 1 — JOIN DISCORD (unlocks the providers below)
          ========================================================= -->
     <section class="container" aria-labelledby="gate-title">
-      <code id="loader-code" hidden>loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/359e97f8618e9008afe5f496184ebb7c.lua"))()</code>
+      <code id="loader-code" hidden>loadstring(game:HttpGet("https://ajjans-hub.pages.dev/loaders/steal-an-egg.lua"))()</code>
       <div class="gate glass" id="discord-gate">
         <span class="gate__icon" aria-hidden="true">
           <svg class="icon icon--fill gate__icon-discord" aria-hidden="true"><use href="#i-discord" /></svg>
@@ -1179,9 +1181,9 @@
               <svg class="icon provider__fallback" aria-hidden="true"><use href="#i-bolt" /></svg>
             </span>
             <h3>Linkvertise</h3>
-            <p>Complete a quick checkpoint to get your key instantly.</p>
-            <a class="btn btn--primary btn--lg" href="https://ads.luarmor.net/get_key?for=Ajjan_key_system-QYxOdgnlCAzW" target="_blank" rel="noopener">
-              <svg class="icon icon--lead" aria-hidden="true"><use href="#i-key" /></svg> get key <svg class="icon icon--arrow" aria-hidden="true"><use href="#i-arrow" /></svg>
+            <p>Complete two checkpoints to generate your 15-hour key.</p>
+            <a class="btn btn--primary btn--lg" href="#your-keys" data-key-provider="linkvertise" aria-disabled="true">
+              <svg class="icon icon--lead" aria-hidden="true"><use href="#i-key" /></svg> <span data-key-provider-label>get key</span> <svg class="icon icon--arrow" aria-hidden="true"><use href="#i-arrow" /></svg>
             </a>
           </article>
           <article class="provider glass">
@@ -1190,9 +1192,9 @@
               <svg class="icon provider__fallback" aria-hidden="true"><use href="#i-link" /></svg>
             </span>
             <h3>Loot Labs</h3>
-            <p>Alternative provider with a slightly longer process.</p>
-            <a class="btn btn--glass btn--lg" href="https://ads.luarmor.net/get_key?for=ajjan_hub_lootlabs-hHxPaqwgzfzK" target="_blank" rel="noopener">
-              <svg class="icon icon--lead" aria-hidden="true"><use href="#i-key" /></svg> get key <svg class="icon icon--arrow" aria-hidden="true"><use href="#i-arrow" /></svg>
+            <p>Complete two checkpoints with our alternative provider.</p>
+            <a class="btn btn--glass btn--lg" href="#your-keys" data-key-provider="lootlabs" aria-disabled="true">
+              <svg class="icon icon--lead" aria-hidden="true"><use href="#i-key" /></svg> <span data-key-provider-label>get key</span> <svg class="icon icon--arrow" aria-hidden="true"><use href="#i-arrow" /></svg>
             </a>
           </article>
         </div>
@@ -1206,6 +1208,25 @@
     <!-- =========================================================
          STEP 3 — PASTE IN THE GUI
          ========================================================= -->
+    <section class="section section--tight container" id="your-keys" aria-labelledby="your-keys-title">
+      <div class="keys-panel glass">
+        <div class="keys-panel__head">
+          <div><p class="kicker">your access</p><h2 id="your-keys-title">Your <span class="text-red">keys</span></h2><p class="keys-panel__count" id="key-count">0 / 3 active</p></div>
+          <button type="button" class="btn btn--glass btn--sm" id="key-refresh">refresh keys</button>
+        </div>
+        <div class="key-tasks">
+          <div class="key-tasks__head"><h3 id="key-task-title">Complete your tasks</h3><span id="key-progress-label">0 of 2 complete · 2 remaining</span></div>
+          <div class="key-progress" id="key-progress" role="progressbar" aria-label="Checkpoint progress" aria-valuemin="0" aria-valuemax="2" aria-valuenow="0"><span id="key-progress-fill"></span></div>
+          <ol class="key-steps"><li id="key-step-1"><span class="key-step__icon">1</span><span>Checkpoint 1<small>Not completed</small></span></li><li id="key-step-2"><span class="key-step__icon">2</span><span>Checkpoint 2<small>Not completed</small></span></li></ol>
+          <p class="keys-panel__notice" id="key-notice" role="status" aria-live="polite">Complete both checkpoints above, then press Generate Key.</p>
+          <div class="key-generate-actions"><button type="button" class="btn btn--primary" id="key-generate">Generate Key</button><span>15 hours of access · one HWID per key</span></div>
+        </div>
+        <div class="keys-panel__list" id="key-list"></div>
+        <div id="key-toast" class="key-toast" role="status" aria-live="polite" hidden><span class="key-toast__icon" aria-hidden="true"></span><div><strong></strong><p></p></div><button type="button" aria-label="Dismiss notification">×</button></div>
+        <noscript><p class="keys-panel__notice">Enable JavaScript to generate and copy your access key.</p></noscript>
+      </div>
+    </section>
+
     <section class="section section--tight container" aria-labelledby="paste-title">
       <div class="paste glass reveal">
         <span class="icon-box" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-terminal" /></svg></span>
